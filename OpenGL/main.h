@@ -7,12 +7,19 @@
 
 GLFWwindow* window;
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
-unsigned int VAO,VBO,buffer,vertexShader,shaderProgram,fragmentShader;
+unsigned int VAO,VBO,EBO,buffer,vertexShader,shaderProgram,fragmentShader;
 
 float verticies[] =
 { -0.5f,-0.5f,0.0f,
 0.5f, -0.5f,0.0f,
-0.0f, 0.5f, -0.0f
+0.0f, 0.5f, -0.0f,
+-0.5f, -0.5f, 0.0f,  
+-0.5f,  0.5f, 0.0f
+};
+
+unsigned int indicies[] = {
+0,1,3,
+1,2,3
 };
 
 const char* vertShadSource = "#version 330 core\n"
