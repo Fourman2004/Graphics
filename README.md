@@ -5,12 +5,12 @@ For this project, I will use knowledge from [LearnOpenGL](https://learnopengl.co
 
 This project, because it uses [LearnOpenGL](https://learnopengl.com/), will be using GLAD and GLFW3, and be in around 5 scripts:
 
-OpenGL.cpp - This file contains the Main, Along with voids for GLFW inputs and mesh creation
+- OpenGL.cpp - This file contains the Main, Along with voids for GLFW inputs and mesh creation
 
-FragShader.GLSL - Fragement shader
+ - FragShader.GLSL - Fragement shader
 
-VertexShader.GLSL - Vertex shader
+ - VertexShader.GLSL - Vertex shader
 
-main.h - ALl the variables for OpenGL.cpp exist here
+ - main.h - ALl the variables for OpenGL.cpp exist here
 
 I will organise and comment the code, and optimise it using [Nisight](https://developer.nvidia.com/nsight-graphics) and In-built Visual Studio Tools.
