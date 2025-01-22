@@ -1,7 +1,7 @@
 # OpenGL Idea
 
 ## Worksheet 2
-For this project, I will use knowledge from [LearnOpenGL](https://learnopengl.com/) and [The Nature of code book](https://natureofcode.com/) to create a 3D fire system. You will be able to spawn the fire by pressing the space bar and move the camera with traditional W/A/S/D keyboard and Mouse controls.
+For this project, I will use knowledge from [LearnOpenGL](https://learnopengl.com/) and [The Nature of code book](https://natureofcode.com/) to create a 3D fire system. You will be able to spawn the fire by pressing s key and move the camera with traditional W/A/S/D keyboard and Mouse controls.
 
 This project, because it uses [LearnOpenGL](https://learnopengl.com/), will be using GLAD and GLFW3, and be in around 5 scripts:
 
