@@ -7,20 +7,8 @@
 
 GLFWwindow* window;
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
-unsigned int VAO,VBO,EBO,buffer,vertexShader,shaderProgram,fragmentShader;
-
-float verticies[] =
-{ -0.5f,-0.5f,0.0f,
-0.5f, -0.5f,0.0f,
-0.0f, 0.5f, -0.0f,
--0.5f, -0.5f, 0.0f,  
--0.5f,  0.5f, 0.0f
-};
-
-unsigned int indicies[] = {
-0,1,3,
-1,2,3
-};
+unsigned int buffer;
+GLuint vertexShader, fragmentShader,shaderProgram, VAO, VBO, EBO;
 
 const char* vertShadSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -38,3 +26,4 @@ const char* fragShadSource = "out vec4 FragColor;\n "
 void inputProcess(GLFWwindow* window);
 bool WindowGen();
 void callbackFramebufferSize(GLFWwindow* window, int width, int height);
+int shapeGen();
