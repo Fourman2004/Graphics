@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <glad/glad.h>
+#include <Shader.h>
 #include <GL/gl.h> 
 #include <GLFW/glfw3.h>
 
