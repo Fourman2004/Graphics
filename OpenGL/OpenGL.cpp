@@ -26,7 +26,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -100,13 +100,17 @@ int shapeGen()
     
     GLfloat vertices[] = {
         -0.5, -0.5 * float(sqrt(3)) /3, 0.0f,
-        -0.5, 0.5 * float(sqrt(3)) / 3, 0.0f,
-        0.0, 0.5 * float(sqrt(3)) * 2 / 3, 0.0f
+        0.5, -0.5 * float(sqrt(3)) / 3, 0.0f,
+        0.0, 0.5 * (float(sqrt(3)) * 2) / 3, 0.0f,
+        -0.5 / 2, 0.5 * float(sqrt(3)) / 6, 0.0f,
+        0.5 / 2, 0.5 * float(sqrt(3)) / 6, 0.0f,
+        0.0, -0.5 * float(sqrt(3)) / 3, 0.0f
     };
 
     GLuint indices[] = {  
-        0, 1, 3,  
-        1, 2, 3   
+        0, 3, 5,  
+        3, 2, 4,
+        5, 4, 1
     };
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -127,6 +131,8 @@ int shapeGen()
 
     glBindVertexArray(0);
 
+
+
     return 0;
 }
 
@@ -137,7 +143,7 @@ bool WindowGen()
     if (!glfwInit())
         return false;
 
-    window = glfwCreateWindow(1080, 720, "3D fire", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "3D fire", NULL, NULL);
 
     if (!window)
     {
