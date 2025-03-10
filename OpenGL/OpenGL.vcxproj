@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Libraries\assimp-4.1.0\include;..\Libraries\glm\include;..\Libraries\glew-2.1.0\include;..\Libraries\GLFW\include;..\Libraries\glad\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Libraries\assimp-4.1.0\include;..\Libraries\glm;..\Libraries\glew-2.1.0\include;..\Libraries\GLFW\include;..\Libraries\glad\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
