@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include <glad/glad.h>
-#include <Shader.h>
 #include <GL/gl.h> 
 #include <GLFW/glfw3.h>
+#include "Shader.h"
 
 GLFWwindow* window;
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);

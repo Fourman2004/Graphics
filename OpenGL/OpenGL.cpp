@@ -21,10 +21,11 @@ int main(void)
     {
         inputProcess(window);
         shapeGen();
+        shader myshader("VertexShader.glsl", "FragmentShader.glsl");
         /* Render here */
         glClearColor(1.0f, 0.0f, 0.5f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glUseProgram(shaderProgram);
+        myshader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
@@ -60,7 +61,7 @@ void callbackFramebufferSize(GLFWwindow* window, int width, int height)
 int shapeGen()
 {
 
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    /*vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertShadSource, NULL);
     glCompileShader(vertexShader);
     // check for shader compile errors
@@ -95,9 +96,11 @@ int shapeGen()
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
     glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    glDeleteShader(fragmentShader);*/
 
-    
+    //shader myshader("VertexShader.glsl", "FragmentShader.glsl");
+
+
     GLfloat vertices[] = {
         -0.5, -0.5 * float(sqrt(3)) /3, 0.0f,
         0.5, -0.5 * float(sqrt(3)) / 3, 0.0f,
