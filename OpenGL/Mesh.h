@@ -13,14 +13,15 @@ using namespace std;
 
 struct Vertex
 {
-    vec3 position, normal, texCoords, tangent, bitTangent;
+    vec3 position, normal, tangent, bitTangent;
+    vec2 texCoords;
     int m_boneIDs[MAX_BONE_INFLUENCE];
 };
 
 struct texture
 {
     unsigned int id;
-    string type;
+    string type,path;
 };
 
 class Mesh
@@ -97,6 +98,9 @@ private:
 
         glBindVertexArray(0);
 
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
 	}
 };
 
