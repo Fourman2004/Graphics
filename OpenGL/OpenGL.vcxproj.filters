@@ -35,6 +35,12 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShader.glsl">
@@ -48,7 +54,7 @@
     <Image Include="wall.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Picture.jpg">
+    <Image Include="FireTexture.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

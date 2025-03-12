@@ -7,8 +7,9 @@
 #include <gtc/type_ptr.hpp>
 #include <GL/gl.h> 
 #include <GLFW/glfw3.h>
-#include "Shader.h"
 #include "Texture.h"
+#include "Camera.h"
+#include "Shader.h"
 
 using namespace glm;
 
@@ -18,12 +19,13 @@ GLFWwindow* window;
 
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 
-
-
 //Unsigned integer's for the vertex shader, fragment shader, the program the shader's attached to, along with the buffers for verticies, indicies and the vertex array
-GLuint vertexShader, fragmentShader,shaderProgram, VAO, VBO, EBO;
+GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
 
 
+
+// Matrix for Translation
+mat4 Trans;
 // Matrix for Scaling
 mat4 Scal;
 // Matrix for Rotating
@@ -47,6 +49,3 @@ void callbackFramebufferSize(GLFWwindow* window, int width, int height);
 /// Creates the Shape by drawing verticies in the window. Passes the data through VBO, VAO and EBO buffers.
 /// </summery>
 int shapeGen();
-
-// Matrix for Translation
-mat4 transform(mat4 Trans);

@@ -2,13 +2,10 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/glad.h>
-
-#include <string>
-#include <glm.hpp>
+#include "main.h"
 #include <fstream>
 #include <sstream>
-#include <iostream>
+
 
 using namespace std;
 using namespace glm;

@@ -137,7 +137,9 @@
     <ClCompile Include="OpenGL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
@@ -147,7 +149,7 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Picture.jpg" />
+    <Image Include="FireTexture.png" />
     <Image Include="wall.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

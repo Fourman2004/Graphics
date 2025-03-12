@@ -22,15 +22,19 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         inputProcess(window);
-        Textureshape("picture.jpg", 1, 1, 0, true);
+        Textureshape("FireTexture.png", 1, 1, 0, true);
         shapeGen();
-        transform(2);
+        Trans = mat4(1.0f);
+        Trans = translate(Trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        Trans = rotate(Trans, (float)glfwGetTime(), glm::vec3(0, 0, 1));
+        Trans = scale(Trans, glm::vec3(0.5, 0.5, 0.5));
         shader myshader("VertexShader.glsl", "FragmentShader.glsl");
         /* Render here */
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glBindTexture(GL_TEXTURE_2D, Texture);
         myshader.use();
+        myshader.setMat4("transform", Trans);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
