@@ -22,12 +22,13 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         inputProcess(window);
+        Textureshape("wall.jpg", 0, 0, 0);
         shapeGen();
-        Textureshape("wall.jpg", 1080, 720, 0);
         shader myshader("VertexShader.glsl", "FragmentShader.glsl");
         /* Render here */
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glBindTexture(GL_TEXTURE_2D, Texture);
         myshader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -65,10 +66,10 @@ int shapeGen()
 {
 
     GLfloat vertices[] = {
-     0.5,0.5,0,     1,0,0,  1,1,
-     0.5,-0.5,0,    0,1,0,   1,0,
-     -0.5,-0.5,0,   0,0,1,   0,0,
-     -0.5,0.5,0,    1,1,0,   0,1
+     0.5,0.5,0,     1,0,0,  //1,1,
+     0.5,-0.5,0,    0,1,0,   //1,0,
+     -0.5,-0.5,0,   0,0,1,   //0,0,
+     -0.5,0.5,0,    1,1,0,   //0,1
     };
 
     GLuint indices[] = {  
@@ -88,14 +89,18 @@ int shapeGen()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
-    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+   // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
+    //glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
-
-
 
     return 0;
 }

@@ -2,12 +2,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+unsigned int Texture;
+
 using namespace std;
 int Textureshape(const char* SourceTexture, int height, int width, int Channels)
 {
-
-    unsigned char *TexturePath = stbi_load(SourceTexture, &width, &height, &Channels,0);
-    unsigned int Texture;
+    unsigned char *TexturePath = stbi_load(SourceTexture, &width, &height, &Channels, 0);
     glGenTextures(1, &Texture);
     glBindTexture(GL_TEXTURE_2D, Texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -23,7 +23,6 @@ int Textureshape(const char* SourceTexture, int height, int width, int Channels)
     {
         cout << "ERROR: TEXTURE FAILURE" << endl;
     }
-    glBindTexture(GL_TEXTURE_2D, Texture);
     stbi_image_free(TexturePath);
 
     return 0;
