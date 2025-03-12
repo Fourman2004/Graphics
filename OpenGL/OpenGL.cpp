@@ -23,13 +23,14 @@ int main(void)
     {
         inputProcess(window);
         shapeGen();
+        Textureshape("wall.jpg", 1080, 720, 0);
         shader myshader("VertexShader.glsl", "FragmentShader.glsl");
         /* Render here */
-        glClearColor(1.0f, 0.0f, 0.5f, 0.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         myshader.use();
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -64,12 +65,10 @@ int shapeGen()
 {
 
     GLfloat vertices[] = {
-        -0.5, -0.5 * float(sqrt(3)) /3, 0.0f,
-        0.5, -0.5 * float(sqrt(3)) / 3, 0.0f,
-        0.0, 0.5 * (float(sqrt(3)) * 2) / 3, 0.0f,
-        -0.5 / 2, 0.5 * float(sqrt(3)) / 6, 0.0f,
-        0.5 / 2, 0.5 * float(sqrt(3)) / 6, 0.0f,
-        0.0, -0.5 * float(sqrt(3)) / 3, 0.0f
+     0.5,0.5,0,     1,0,0,  1,1,
+     0.5,-0.5,0,    0,1,0,   1,0,
+     -0.5,-0.5,0,   0,0,1,   0,0,
+     -0.5,0.5,0,    1,1,0,   0,1
     };
 
     GLuint indices[] = {  
@@ -89,8 +88,8 @@ int shapeGen()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -101,25 +100,7 @@ int shapeGen()
     return 0;
 }
 
-int Textureshape(GLuint texture, bool Flipped)
-{
-    GLfloat TextureCoords[] =
-    {
-        0,0,
-        1,0,
-        0.5,1
-    };
 
-    GLfloat Border[] =
-    {
-        1,1,0,1
-    };
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, Border);
-
-}
 
 bool WindowGen()
 {

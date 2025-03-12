@@ -6,6 +6,7 @@
 #include <GL/gl.h> 
 #include <GLFW/glfw3.h>
 #include "Shader.h"
+#include "Texture.h"
 
 GLFWwindow* window;
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
