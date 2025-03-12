@@ -101,6 +101,23 @@ int shapeGen()
     return 0;
 }
 
+int Textureshape(GLuint texture, bool Flipped)
+{
+    GLfloat TextureCoords[] =
+    {
+        0,0,
+        1,0,
+        0.5,1
+    };
+
+    GLfloat Border[] =
+    {
+        1,1,0,1
+    };
+
+
+}
+
 bool WindowGen()
 {
 
