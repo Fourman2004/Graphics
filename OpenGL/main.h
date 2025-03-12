@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Model.h"
 
 using namespace glm;
 
@@ -20,7 +21,7 @@ GLFWwindow* window;
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 
 //Unsigned integer's for the vertex shader, fragment shader, the program the shader's attached to, along with the buffers for verticies, indicies and the vertex array
-GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
+GLuint vertexShader, fragmentShader, shaderProgram;
 
 
 
