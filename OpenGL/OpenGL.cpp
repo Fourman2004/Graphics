@@ -15,6 +15,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     WindowGen();
+    //Deletes the shaders used
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
@@ -22,7 +23,7 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         inputProcess(window);
-        Textureshape("wall.jpg", 0, 0, 0);
+        Textureshape("picture.jpg", 1, 1, 0, true);
         shapeGen();
         shader myshader("VertexShader.glsl", "FragmentShader.glsl");
         /* Render here */
@@ -66,16 +67,15 @@ int shapeGen()
 {
 
     GLfloat vertices[] = {
-     0.5,0.5,0,     1,0,0,  //1,1,
-     0.5,-0.5,0,    0,1,0,   //1,0,
-     -0.5,-0.5,0,   0,0,1,   //0,0,
-     -0.5,0.5,0,    1,1,0,   //0,1
+     0.5,0.5,0,     1,0,0,  1,1,
+     0.5,-0.5,0,    0,1,0,   1,0,
+     -0.5,-0.5,0,   0,0,1,   0,0,
+     -0.5,0.5,0,    1,1,0,   0,1
     };
 
     GLuint indices[] = {  
-        0, 3, 5,  
-        3, 2, 4,
-        5, 4, 1
+        0, 1, 2,  
+        1, 2, 3,
     };
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -95,8 +95,8 @@ int shapeGen()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-   // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
-    //glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -123,7 +123,6 @@ bool WindowGen()
         return false;
     }
 
-    /* Make the window's context current */
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
 

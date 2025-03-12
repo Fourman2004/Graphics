@@ -48,5 +48,8 @@
     <Image Include="wall.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Picture.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
