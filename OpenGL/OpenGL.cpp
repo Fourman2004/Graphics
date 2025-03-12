@@ -7,13 +7,16 @@
 
 int main(void)
 {
-
+    screenW = 800;
+    screenH = 600;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     WindowGen();
+    shader myshader("VertexShader.glsl", "FragmentShader.glsl");
+    Model myModel("Survival_BackPack_2.fbx", true);
     //Deletes the shaders used
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -25,12 +28,16 @@ int main(void)
       Trans = glm::mat4(1.0f);
       Trans = translate(Trans, vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
       Trans = glm::scale(Trans, glm::vec3(1.0f, 1.0f, 1.0f));
-      shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-      Model Model("Survival_BackPack_2.fbx", true);
       glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       glClear(GL_COLOR_BUFFER_BIT);
       myshader.use();
-      myshader.setMat4("transform", Trans);
+
+      mat4 projection = perspective(glm::radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
+      mat4 view = camera.GetViewMatrix();
+      myshader.setMat4("projection", projection);
+      myshader.setMat4("view", view);
+      myshader.setMat4("model", Trans);
+      myModel.Draw(myshader);
       glfwSwapBuffers(window);
      glfwPollEvents();
     }
@@ -63,7 +70,7 @@ bool WindowGen()
     if (!glfwInit())
         return false;
 
-    window = glfwCreateWindow(800, 600, "3D fire", NULL, NULL);
+    window = glfwCreateWindow(screenW, screenH, "3D fire", NULL, NULL);
 
     if (!window)
     {
