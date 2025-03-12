@@ -5,11 +5,13 @@
 #include <glad/glad.h>
 
 #include <string>
+#include <glm.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
 using namespace std;
+using namespace glm;
 
 /// <summary>
 /// <para>Shader Class that grabs the GLSL files.</para>
@@ -112,20 +114,118 @@ public:
 	{
 		glUseProgram(ID);
 	}
-	//If a uniform bool is used, it will set the bool to the value
-	void setBoolValue(const std::string& name, bool value) const
+	/// <summary>
+	/// If a uniform Float is used, it will set the float to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="value"> - The bool, either true or false. This is converted into an integer between 0 or 1</param>
+	void setBool(const string& name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
-	//If a uniform Integer is used, it will set the int to the value
-	void setIntValue(const string& name, int value) const
+	/// <summary>
+	/// If a uniform Float is used, it will set the float to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="value"> - The Integer value in the shader</param>
+	void setInt(const string& name, int value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
-	//If a uniform Float is used, it will set the float to the value
-	void setFloatValue(const string& name, float value) const
+	/// <summary>
+	/// If a uniform Float is used, it will set the float to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// /// <param name="value"> - The Float/Double value in the shader</param>
+	void setFloat(const string& name, float value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	}
+	/// <summary>
+	/// If a uniform 2D is used, it will set the Vector to the value
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="value"> - The Combined value of X,Y in a 2D vector</param>
+	void setVec2(const std::string& name, const glm::vec2& value) const
+	{
+		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+	}
+	/// <summary>
+	/// Alternative to setVec2()
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="x"> - The X axis of the 2D vector</param>
+	/// <param name="y"> - the y axis of the 2D vector</param>
+	void setVec2(const string& name, float x, float y) const
+	{
+		glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
+	}
+	/// <summary>
+	/// If a uniform 3D is used, it will set the Vector to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="value"> - The combined value of X,Y,Z in a 3D vector</param>
+	void setVec3(const string& name, const glm::vec3& value) const
+	{
+		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+	}
+	/// <summary>
+	///Alternative to setVec3()
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="x"> - the X axis in the 3D vector</param>
+	/// <param name="y"> - the Y axis in the 3D vector</param>
+	/// <param name="z"> - the Z axis in the 3D vector</param>
+	void setVec3(const string& name, float x, float y, float z) const
+	{
+		glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
+	}
+	/// <summary>
+	/// If a uniform 4D vector is used, it will set the Vector to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="value"> - The combined value of X,Y,Z,W in a 4D vector</param>
+	void setVec4(const string& name, const vec4& value) const
+	{
+		glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+	}
+	/// <summary>
+	/// Alternative to setVec4()
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="x"> - the X axis in the 4D vector</param>
+	/// <param name="y"> - the Y axis in the 4D vector</param>
+	/// <param name="z"> - the Z axis in the 4D vector</param>
+	/// <param name="w"> - The divisonary value within the 4D vector</param>
+	void setVec4(const string& name, float x, float y, float z, float w) const
+	{
+		glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
+	}
+	/// <summary>
+	///  If a uniform 2D matrix is used, it will set the matricies to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="mat">The Combined value of a 2D matrix</param>
+	void setMat2(const string& name, const mat2& mat) const
+	{
+		glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	}
+	/// <summary>
+	///  If a uniform 3D matrix is used, it will set the matricies to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="mat">The Combined value of a 3D matrix</param>
+	void setMat3(const string& name, const mat3& mat) const
+	{
+		glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	}
+	/// <summary>
+	///  If a uniform 4D matrix is used, it will set the matricies to the value
+	/// </summary>
+	/// <param name="name"> - Name of the Shader Variable</param>
+	/// <param name="mat">The Combined value of a 4D matrix</param>
+	void setMat4(const string& name, const mat4& mat) const
+	{
+		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
 private:
 	/// <summary>

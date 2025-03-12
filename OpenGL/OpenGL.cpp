@@ -4,7 +4,6 @@
 
 #include "main.h"
 
-using namespace glm;
 
 int main(void)
 {
@@ -25,6 +24,7 @@ int main(void)
         inputProcess(window);
         Textureshape("picture.jpg", 1, 1, 0, true);
         shapeGen();
+        transform(2);
         shader myshader("VertexShader.glsl", "FragmentShader.glsl");
         /* Render here */
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -105,8 +105,6 @@ int shapeGen()
     return 0;
 }
 
-
-
 bool WindowGen()
 {
 
@@ -135,3 +133,10 @@ bool WindowGen()
     return window;
 }
 
+mat4 transform(mat4 trans)
+{
+    trans = translate(trans, vec3(0.5,-0.5,0));
+    trans = rotate(trans, (float)glfwGetTime(),vec3(0,0,1));
+
+    return trans;
+}
