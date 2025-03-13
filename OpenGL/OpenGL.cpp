@@ -32,8 +32,7 @@ int main(void)
       glClear(GL_COLOR_BUFFER_BIT);
       myshader.use();
 
-      mat4 projection = perspective(glm::radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
-      mat4 view = camera.GetViewMatrix();
+      mat4 projection = perspective((float)radians(90), (float)screenW / (float)screenH, 0.1f, 100.0f);
       myshader.setMat4("projection", projection);
       myshader.setMat4("view", view);
       myshader.setMat4("model", Trans);
