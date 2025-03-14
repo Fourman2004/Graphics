@@ -51,7 +51,7 @@ public:
             string number;
             string name = textures[i].type;
             if (name == "texture_diffuse") { number = to_string(diffuse++);}
-            else if("tesxture_specular") { number = to_string(specular++);}
+            else if("texture_specular") { number = to_string(specular++);}
             shader.setInt(("material." + name + number).c_str(), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }

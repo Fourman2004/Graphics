@@ -52,29 +52,5 @@
     <None Include="FragmentShader.glsl">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="Model\source\Survival_BackPack_2\Survival_BackPack_2.fbx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="wall.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="FireTexture.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Model\source\Survival_BackPack_2\1001_albedo.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Model\source\Survival_BackPack_2\1001_AO.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Model\source\Survival_BackPack_2\1001_metallic.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Model\source\Survival_BackPack_2\1001_normal.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Model\source\Survival_BackPack_2\1001_roughness.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

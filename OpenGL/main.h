@@ -26,17 +26,26 @@ GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
 unsigned int screenW, screenH;
 
 // Matrix for Translation
-mat4 Trans;
+mat4 model;
 // Matrix for Scaling
 mat4 Scal;
 // Matrix for Rotating
 mat4 Rot;
 
 //Retrives the key presses the user can do.
-void inputProcess(GLFWwindow* window);
-
-//Generates the window used for the project
-bool WindowGen();
+void inputProcess(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        ProcessKeyboard(FORWARD, deltaT);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        ProcessKeyboard(BACKWARD, deltaT);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        ProcessKeyboard(RIGHT, deltaT);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        ProcessKeyboard(LEFT, deltaT);
+};
 
 /// <summary>
 /// Gets the viewport Size
@@ -44,7 +53,39 @@ bool WindowGen();
 /// <param name="window"> - The Window That has been created</param>
 /// <param name="width"> - The width of the viewport</param>
 /// <param name="height"> -  The height of the viewport</param>
-void callbackFramebufferSize(GLFWwindow* window, int width, int height);
+void callbackFramebufferSize(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+};
+
+//Generates the window used for the project
+bool WindowGen()
+{
+
+
+    if (!glfwInit())
+        return false;
+
+    window = glfwCreateWindow(screenW, screenH, "3D fire", NULL, NULL);
+
+    if (!window)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return false;
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return false;
+    }
+
+    return window;
+};
 
 /// <summary>
 /// Creates the Shape by drawing verticies in the window. Passes the data through VBO, VAO and EBO buffers.

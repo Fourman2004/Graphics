@@ -15,8 +15,6 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     WindowGen();
-    shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-    //Model myModel("D:\COMP305_3DFire\OpenGL\Model\backpack.obj", false);
     //Deletes the shaders used
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -24,22 +22,23 @@ int main(void)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-      inputProcess(window);
-      Textureshape("FireTexture.png", 1, 1, 0, true);
-      shapeGen();
-      Trans = glm::mat4(1.0f);
-      Trans = translate(Trans, vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-      Trans = glm::scale(Trans, glm::vec3(1.0f, 1.0f, 1.0f));
+      inputProcess(window,2.5);
+      //Textureshape("FireTexture.png", 1, 1, 0, true);
+      //shapeGen();
+      model = glm::mat4(1.0f);
+     model = translate(model, vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+      model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
       glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       glClear(GL_COLOR_BUFFER_BIT);
+      shader myshader("VertexShader.glsl", "FragmentShader.glsl");
+      Model myModel("..\Model\Backpack.obj", true);
       myshader.use();
-      myshader.setMat4("transform", Trans);
-      //mat4 projection = perspective((float)radians(90), (float)screenW / (float)screenH, 0.1f, 100.0f);
-      //view = lookAt(vec3(CamX, 0, CamZ), vec3(0, 0, 0), vec3(0, 1, 0));
-      //myshader.setMat4("projection", projection);
-     // myshader.setMat4("view", view);
-      //myshader.setMat4("model", Trans);
-     // myModel.Draw(myshader);
+      myshader.setMat4("transform", model);
+      mat4 projection = perspective((float)radians(Camera::Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
+      myshader.setMat4("projection", projection);
+      myshader.setMat4("view", view);
+      myshader.setMat4("model", model);
+      myModel.Draw(myshader);
       glBindVertexArray(VAO);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
       glBindVertexArray(0);
@@ -52,54 +51,4 @@ int main(void)
 
 
     return 0;
-}
-
-void inputProcess(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPosition += mC_speed * CamFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPosition -= mC_speed * CamFront;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPosition += normalize(cross(CamFront,camerUp) * mC_speed);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPosition -= normalize(cross(CamFront, camerUp) * mC_speed);
-}
-
-void callbackFramebufferSize(GLFWwindow* window, int width, int height)
-{
-    glViewport(0,0,width,height);
-}
-
-
-
-
-bool WindowGen()
-{
-
-
-    if (!glfwInit())
-        return false;
-
-    window = glfwCreateWindow(screenW, screenH, "3D fire", NULL, NULL);
-
-    if (!window)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return false;
-    }
-
-    return window;
 }
