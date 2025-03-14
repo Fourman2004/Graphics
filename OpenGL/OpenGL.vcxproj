@@ -147,18 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
-    <None Include="SurvivalBackpack.mtl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="FireTexture.png" />
-    <Image Include="Model\source\Survival_BackPack_2\1001_AO.jpg" />
-    <Image Include="Model\source\Survival_BackPack_2\1001_diffuse.jpg" />
-    <Image Include="Model\source\Survival_BackPack_2\1001_normal.png" />
-    <Image Include="Model\source\Survival_BackPack_2\1001_specular.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="SurvivalBackpack.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
