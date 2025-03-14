@@ -7,8 +7,6 @@
 
 int main(void)
 {
-    screenW = 800;
-    screenH = 600;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -22,7 +20,7 @@ int main(void)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-      inputProcess(window,2.5);
+      inputProcess(window);
       //Textureshape("FireTexture.png", 1, 1, 0, true);
       //shapeGen();
       model = glm::mat4(1.0f);
@@ -34,7 +32,7 @@ int main(void)
       Model myModel("..\Model\Backpack.obj", true);
       myshader.use();
       myshader.setMat4("transform", model);
-      mat4 projection = perspective((float)radians(Camera::Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
+      mat4 projection = perspective((float)radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
       myshader.setMat4("projection", projection);
       myshader.setMat4("view", view);
       myshader.setMat4("model", model);

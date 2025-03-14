@@ -12,7 +12,14 @@ enum Direction
 	, RIGHT
 };
 
-const float YAW,PITCH,ZOOM,SENS,SPEED;
+float currentF= static_cast<float>(glfwGetTime());
+bool mouse;
+
+const float YAW = -90,
+PITCH = 0,ZOOM = 45,SENS = 0.1,SPEED = 2.5;
+unsigned int screenW = 800, screenH = 600;
+float lastX = screenW / 2.0f;
+float lastY = screenH / 2.0f;
 
 	class Camera
 	{
@@ -37,6 +44,11 @@ const float YAW,PITCH,ZOOM,SENS,SPEED;
 			Pitch = pitch;
 			updateCamera();
 		}
+		mat4 viewMatrix()
+		{
+			return lookAt(Pos, Pos + Front, Up);
+		}
+
 
 		void updateKeyboard(Direction direction, float deltaTime)
 		{
@@ -56,10 +68,31 @@ const float YAW,PITCH,ZOOM,SENS,SPEED;
 				Pos -= Right * velocity;
 				break;
 			}
-			
-				
-				
-		
+		}
+		void mouseScroll(float yoffset)
+		{
+			Zoom -= (float)yoffset;
+			if (Zoom < 1.0f)
+				Zoom = 1.0f;
+			if (Zoom > 45.0f)
+				Zoom = 45.0f;
+		}
+
+		void mouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
+		{
+			xoffset *= Sensitivity;
+			yoffset *= Sensitivity;
+			Yaw = xoffset;
+			Pitch = yoffset;
+			if (constrainPitch)
+			{
+				if (Pitch > 89)
+					Pitch = 89;
+				if (Pitch < -89)
+					Pitch = -89;
+					updateCamera();
+			}
+
 		}
 
 		void call_Mouse(GLFWwindow* window, double xpos, double ypos)
@@ -67,13 +100,20 @@ const float YAW,PITCH,ZOOM,SENS,SPEED;
 			float Xposition = static_cast<float>(xpos);
 			float Yposition = static_cast<float>(ypos);
 
-			if ()
+			if (mouse)
 			{
-
+				lastX = Xposition;
+				lastY = Yposition;
+				mouse = false;
 			}
+			float Xoff, Yoff;
+			Xoff = Xposition - lastX;
+			Yoff = Yposition - lastX;
+			lastX = Xposition;
+			lastY = Yposition;
+			mouseMovement(Xoff,Yoff);
 		}
 
-	private:
 		void updateCamera()
 		{
 			vec3 front;

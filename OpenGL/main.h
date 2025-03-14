@@ -23,8 +23,6 @@ typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 //Unsigned integer's for the vertex shader, fragment shader, the program the shader's attached to, along with the buffers for verticies, indicies and the vertex array
 GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
 
-unsigned int screenW, screenH;
-
 // Matrix for Translation
 mat4 model;
 // Matrix for Scaling
@@ -32,20 +30,32 @@ mat4 Scal;
 // Matrix for Rotating
 mat4 Rot;
 
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+float lastF = currentF;
+float deltaT = currentF - lastF;
+
+mat4 view = camera.viewMatrix();
+
 //Retrives the key presses the user can do.
 void inputProcess(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        ProcessKeyboard(FORWARD, deltaT);
+        camera.updateKeyboard(FORWARD, deltaT);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        ProcessKeyboard(BACKWARD, deltaT);
+        camera.updateKeyboard(BACKWARD, deltaT);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        ProcessKeyboard(RIGHT, deltaT);
+        camera.updateKeyboard(RIGHT, deltaT);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        ProcessKeyboard(LEFT, deltaT);
+        camera.updateKeyboard(LEFT, deltaT);
 };
+
+void scrollMovement(GLFWwindow* window, double xoffset, double yoffset)
+{
+    return camera.mouseScroll(static_cast<float>(yoffset));
+}
+
 
 /// <summary>
 /// Gets the viewport Size
@@ -77,6 +87,8 @@ bool WindowGen()
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
+    glfwSetCursorPosCallback(window, mouseMovement);
+    glfwSetScrollCallback(window, scrollMovement);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
