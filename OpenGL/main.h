@@ -8,8 +8,8 @@
 #include <GL/gl.h> 
 #include <GLFW/glfw3.h>
 #include "Texture.h"
-#include "Camera.h"
 #include "Shader.h"
+#include "Camera.h"
 #include "Model.h"
 
 using namespace glm;
@@ -87,7 +87,7 @@ bool WindowGen()
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
-    glfwSetCursorPosCallback(window, mouseMovement);
+    glfwSetCursorPosCallback(window,callMouse);
     glfwSetScrollCallback(window, scrollMovement);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

@@ -14,7 +14,6 @@ enum Direction
 
 float currentF= static_cast<float>(glfwGetTime());
 bool mouse;
-
 const float YAW = -90,
 PITCH = 0,ZOOM = 45,SENS = 0.1,SPEED = 2.5;
 unsigned int screenW = 800, screenH = 600;
@@ -95,7 +94,7 @@ float lastY = screenH / 2.0f;
 
 		}
 
-		void call_Mouse(GLFWwindow* window, double xpos, double ypos)
+		void callMouse(GLFWwindow* window, double xpos, double ypos)
 		{
 			float Xposition = static_cast<float>(xpos);
 			float Yposition = static_cast<float>(ypos);
