@@ -16,7 +16,7 @@ int main(void)
 
     WindowGen();
     shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-    Model myModel("Survival_BackPack_2.fbx", true);
+    Model myModel("SurvivalBackpack.obj", false);
     //Deletes the shaders used
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -32,10 +32,9 @@ int main(void)
       glClear(GL_COLOR_BUFFER_BIT);
       myshader.use();
 
-      radial = 10.0f;
-      mat4 projection = perspective((float)radians(90), (float)screenW / (float)screenH, 0.1f, 100.0f);
+      //mat4 projection = perspective((float)radians(90), (float)screenW / (float)screenH, 0.1f, 100.0f);
       view = lookAt(vec3(CamX, 0, CamZ), vec3(0, 0, 0), vec3(0, 1, 0));
-      myshader.setMat4("projection", projection);
+      //myshader.setMat4("projection", projection);
       myshader.setMat4("view", view);
       myshader.setMat4("model", Trans);
       myModel.Draw(myshader);
@@ -54,6 +53,14 @@ void inputProcess(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPosition += mC_speed * CamFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPosition -= mC_speed * CamFront;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPosition += normalize(cross(CamFront,camerUp) * mC_speed);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPosition -= normalize(cross(CamFront, camerUp) * mC_speed);
 }
 
 void callbackFramebufferSize(GLFWwindow* window, int width, int height)

@@ -6,7 +6,7 @@
 #include "main.h"
 
 
-#define MAX_BONE_INFLUENCE
+#define MAX_BONE_INFLUENCE 4
 
 using namespace glm;
 using namespace std;

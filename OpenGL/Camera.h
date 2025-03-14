@@ -4,8 +4,10 @@
 
 using namespace glm;
 
-	static float radial;
+	float radial = 10.0f;
+	float mC_speed = 0.5;
 	mat4 view = mat4(1);
+	vec3 CamFront = vec3(0,0,-1);
 	vec3 cameraPosition = vec3(0, 0, 3);
 	vec3 cameraTarget = vec3(0, 0, 0);
 	vec3 cameraDirection = normalize(cameraPosition - cameraTarget);
