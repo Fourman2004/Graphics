@@ -32,7 +32,9 @@ int main(void)
       glClear(GL_COLOR_BUFFER_BIT);
       myshader.use();
 
+      radial = 10.0f;
       mat4 projection = perspective((float)radians(90), (float)screenW / (float)screenH, 0.1f, 100.0f);
+      view = lookAt(vec3(CamX, 0, CamZ), vec3(0, 0, 0), vec3(0, 1, 0));
       myshader.setMat4("projection", projection);
       myshader.setMat4("view", view);
       myshader.setMat4("model", Trans);
