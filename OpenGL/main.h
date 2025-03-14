@@ -16,6 +16,25 @@ using namespace glm;
 
 // A pointer to the window that will be generated
 GLFWwindow* window;
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+void callMouse(GLFWwindow* window, double xpos, double ypos)
+{
+    float Xposition = static_cast<float>(xpos);
+    float Yposition = static_cast<float>(ypos);
+
+    if (mouse)
+    {
+        lastX = Xposition;
+        lastY = Yposition;
+        mouse = false;
+    }
+    float Xoff, Yoff;
+    Xoff = Xposition - lastX;
+    Yoff = Yposition - lastX;
+    lastX = Xposition;
+    lastY = Yposition;
+    camera.mouseMovement(Xoff, Yoff);
+};
 
 
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
@@ -30,7 +49,6 @@ mat4 Scal;
 // Matrix for Rotating
 mat4 Rot;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastF = currentF;
 float deltaT = currentF - lastF;
 
@@ -87,7 +105,7 @@ bool WindowGen()
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
-    glfwSetCursorPosCallback(window,callMouse);
+    glfwSetCursorPosCallback(window, callMouse);
     glfwSetScrollCallback(window, scrollMovement);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

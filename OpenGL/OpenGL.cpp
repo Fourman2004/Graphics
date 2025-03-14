@@ -29,7 +29,7 @@ int main(void)
       glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       glClear(GL_COLOR_BUFFER_BIT);
       shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-      Model myModel("..\Model\Backpack.obj", true);
+      Model myModel("Backpack.obj", true);
       myshader.use();
       myshader.setMat4("transform", model);
       mat4 projection = perspective((float)radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
