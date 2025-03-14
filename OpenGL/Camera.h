@@ -6,6 +6,9 @@ using namespace glm;
 
 	float radial = 10.0f;
 	float mC_speed = 0.5;
+	float lastF = 0;
+	float currentF = glfwGetTime();
+	float deltaT = currentF - lastF;
 	mat4 view = mat4(1);
 	vec3 CamFront = vec3(0,0,-1);
 	vec3 cameraPosition = vec3(0, 0, 3);

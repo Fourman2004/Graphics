@@ -16,7 +16,7 @@ int main(void)
 
     WindowGen();
     shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-    Model myModel("SurvivalBackpack.obj", false);
+    //Model myModel("D:\COMP305_3DFire\OpenGL\Model\backpack.obj", false);
     //Deletes the shaders used
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -25,19 +25,24 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
       inputProcess(window);
+      Textureshape("FireTexture.png", 1, 1, 0, true);
+      shapeGen();
       Trans = glm::mat4(1.0f);
       Trans = translate(Trans, vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
       Trans = glm::scale(Trans, glm::vec3(1.0f, 1.0f, 1.0f));
       glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       glClear(GL_COLOR_BUFFER_BIT);
       myshader.use();
-
+      myshader.setMat4("transform", Trans);
       //mat4 projection = perspective((float)radians(90), (float)screenW / (float)screenH, 0.1f, 100.0f);
-      view = lookAt(vec3(CamX, 0, CamZ), vec3(0, 0, 0), vec3(0, 1, 0));
+      //view = lookAt(vec3(CamX, 0, CamZ), vec3(0, 0, 0), vec3(0, 1, 0));
       //myshader.setMat4("projection", projection);
-      myshader.setMat4("view", view);
-      myshader.setMat4("model", Trans);
-      myModel.Draw(myshader);
+     // myshader.setMat4("view", view);
+      //myshader.setMat4("model", Trans);
+     // myModel.Draw(myshader);
+      glBindVertexArray(VAO);
+      glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+      glBindVertexArray(0);
       glfwSwapBuffers(window);
      glfwPollEvents();
     }
