@@ -13,6 +13,6 @@ uniform transform
 void main()
 {
     gl_Position = transform * vec4(Pos.x, Pos.y, Pos.z, 1.0);;
-    vertColour = Color;
+    vertColour = Normal;
     textureCoord = Texture;
 };
