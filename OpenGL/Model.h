@@ -197,8 +197,7 @@ private:
 
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
-    string filename = string(path);
-    filename = directory + '/' + filename;
+    string filename = directory + '/' + "diffuse.png";
     cout << filename << endl;
 
     unsigned int textureID;

@@ -13,11 +13,11 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     WindowGen();
-    stbi_set_flip_vertically_on_load(true);
+    stbi_set_flip_vertically_on_load(false);
 
     shader myshader("VertexShader.glsl", "FragmentShader.glsl");
     glEnable(GL_DEPTH_TEST);
-    Model myModel("orb.fbx");
+    Model myModel("Pabloorb.fbx");
 
     while (!glfwWindowShouldClose(window))
     {
@@ -26,7 +26,8 @@ int main()
       
       model = mat4(1.0f);
       model = translate(model, vec3(0.0f, 0.0f, 0.0f)); 
-      glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+      model = scale(model, vec3(1, 1, 1));
+      glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       myshader.use();
     
