@@ -29,7 +29,7 @@ int main(void)
       glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       glClear(GL_COLOR_BUFFER_BIT);
       shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-      Model myModel("../Model/Pabloorb.fbx", false);
+      Model myModel("../Model/PabloTower.fbx", false);
       stbi_set_flip_vertically_on_load(true);
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
       glEnable(GL_DEPTH_TEST);
