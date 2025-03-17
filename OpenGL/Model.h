@@ -197,7 +197,8 @@ private:
 
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
-    string filename = directory + '/' + "diffuse.png";
+
+    string filename = directory + "/" + path;
     cout << filename << endl;
 
     unsigned int textureID;
@@ -230,6 +231,7 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
     {
         cout << "Texture failed to load at path: " << path << endl;
         stbi_image_free(data);
+        
     }
 
     return textureID;

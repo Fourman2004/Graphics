@@ -61,6 +61,9 @@
     <None Include="orb.fbx">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Model\Cube.fbx">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Model\diffuse.png">

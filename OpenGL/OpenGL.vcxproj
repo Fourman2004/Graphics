@@ -149,6 +149,7 @@
     <None Include="..\Model\Pabloorb.fbx" />
     <None Include="..\Model\PabloTower.fbx" />
     <None Include="FragmentShader.glsl" />
+    <None Include="Model\Cube.fbx" />
     <None Include="orb.fbx" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
