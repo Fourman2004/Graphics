@@ -23,7 +23,7 @@ public:
     bool gammaCorrection;
 
     // constructor, expects a filepath to a 3D model.
-    Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
+    Model(string const& path, bool gamma) : gammaCorrection(gamma)
     {
         loadModel(path);
     }
@@ -37,22 +37,24 @@ public:
 
 private:
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-    void loadModel(string const& path)
+    bool loadModel(string const& path)
     {
         // read file via ASSIMP
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes);
         // check for errors
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
             cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
-            return;
+            return false;
         }
         // retrieve the directory path of the filepath
         directory = path.substr(0, path.find_last_of('/'));
         cout << " mesh loaded at path: " << path << endl;
         // process ASSIMP's root node recursively
         processNode(scene->mRootNode, scene);
+
+        return true;
     }
 
     // processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
@@ -197,7 +199,9 @@ private:
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
     string filename = string(path);
+    cout << filename << endl;
     filename = directory + '/' + filename;
+    cout << filename << endl;
 
     unsigned int textureID;
     glGenTextures(1, &textureID);

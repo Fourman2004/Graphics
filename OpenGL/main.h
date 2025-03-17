@@ -43,16 +43,12 @@ typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
 
 // Matrix for Translation
-mat4 model;
-// Matrix for Scaling
-mat4 Scal;
-// Matrix for Rotating
-mat4 Rot;
+mat4 model = mat4(1);
 
 float lastF = currentF;
 float deltaT = currentF - lastF;
 
-mat4 view = camera.viewMatrix();
+mat4 view;
 
 //Retrives the key presses the user can do.
 void inputProcess(GLFWwindow* window)
