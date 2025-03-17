@@ -29,17 +29,19 @@ int main(void)
       glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       glClear(GL_COLOR_BUFFER_BIT);
       shader myshader("VertexShader.glsl", "FragmentShader.glsl");
-      Model myModel("Backpack.obj", true);
+      Model myModel("../Model/Pabloorb.fbx", false);
+      stbi_set_flip_vertically_on_load(true);
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+      glEnable(GL_DEPTH_TEST);
       myshader.use();
-      myshader.setMat4("transform", model);
       mat4 projection = perspective((float)radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
       myshader.setMat4("projection", projection);
       myshader.setMat4("view", view);
       myshader.setMat4("model", model);
       myModel.Draw(myshader);
-      glBindVertexArray(VAO);
+      /*glBindVertexArray(VAO);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-      glBindVertexArray(0);
+      glBindVertexArray(0);*/
       glfwSwapBuffers(window);
      glfwPollEvents();
     }

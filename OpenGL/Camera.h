@@ -55,16 +55,20 @@ float lastY = screenH / 2.0f;
 			switch (direction)
 			{
 			case FORWARD:
+				cout << "forward" << endl;
 				Pos += Front * velocity;
 				break;
 			case BACKWARD:
 				Pos -= Front * velocity;
+				cout << "backwards" << endl;
 				break;
 			case LEFT:
 				Pos -= Right * velocity;
+				cout << "left" << endl;
 				break;
 			case RIGHT:
 				Pos -= Right * velocity;
+				cout << "right" << endl;
 				break;
 			}
 		}
