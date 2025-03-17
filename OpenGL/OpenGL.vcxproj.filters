@@ -52,5 +52,22 @@
     <None Include="FragmentShader.glsl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\Model\PabloTower.fbx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Model\Pabloorb.fbx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="orb.fbx">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Model\diffuse.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="FireTexture.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

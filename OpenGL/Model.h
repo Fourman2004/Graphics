@@ -11,7 +11,7 @@
 using namespace Assimp;
 using namespace glm;
 
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma);
+unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
 
 class Model
 {
@@ -23,7 +23,7 @@ public:
     bool gammaCorrection;
 
     // constructor, expects a filepath to a 3D model.
-    Model(string const& path, bool gamma) : gammaCorrection(gamma)
+    Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
     {
         loadModel(path);
     }
@@ -40,7 +40,7 @@ private:
     bool loadModel(string const& path)
     {
         // read file via ASSIMP
-        Assimp::Importer importer;
+        Importer importer;
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes);
         // check for errors
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
@@ -53,7 +53,6 @@ private:
         cout << " mesh loaded at path: " << path << endl;
         // process ASSIMP's root node recursively
         processNode(scene->mRootNode, scene);
-
         return true;
     }
 
@@ -184,7 +183,7 @@ private:
             if (!skip)
             {   // if texture hasn't been loaded already, load it
                 texture texture;
-                texture.id = TextureFromFile(str.C_Str(), this->directory,false);
+                texture.id = TextureFromFile(str.C_Str(), this->directory);
                 texture.type = typeName;
                 texture.path = str.C_Str();
                 textures.push_back(texture);
@@ -199,7 +198,6 @@ private:
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
     string filename = string(path);
-    cout << filename << endl;
     filename = directory + '/' + filename;
     cout << filename << endl;
 

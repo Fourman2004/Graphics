@@ -146,8 +146,15 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Model\Pabloorb.fbx" />
+    <None Include="..\Model\PabloTower.fbx" />
     <None Include="FragmentShader.glsl" />
+    <None Include="orb.fbx" />
     <None Include="VertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Model\diffuse.png" />
+    <Image Include="FireTexture.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

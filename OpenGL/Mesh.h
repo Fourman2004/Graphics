@@ -21,7 +21,7 @@ struct Vertex
 
 struct texture
 {
-    unsigned int id;
+    unsigned int id = 0;
     string type,path;
 };
 
@@ -54,16 +54,10 @@ public:
             string number;
             string name = textures[i].type;
             if (name == "texture_diffuse") {
-                number = to_string(diffuse++); cout << textures[i].type
-                    << endl;
+                number = to_string(diffuse++);
             }
             else if (name == "texture_specular") {
-                number = to_string(specular++); cout << textures[i].type
-                    << endl;
-            }
-            else {
-                cout << "TEXTURE ERROR!"
-                    << endl;
+                number = to_string(specular++);
             }
             glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
@@ -126,5 +120,6 @@ private:
         glBindVertexArray(0);
 	}
 };
+
 
 #endif
