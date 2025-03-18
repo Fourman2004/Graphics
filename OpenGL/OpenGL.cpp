@@ -17,7 +17,7 @@ int main()
 
     shader myshader("VertexShader.glsl", "FragmentShader.glsl");
     glEnable(GL_DEPTH_TEST);
-    Model myModel("Cube.fbx");
+    Model myModel("Model/Cube.fbx");
 
     while (!glfwWindowShouldClose(window))
     {
