@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\Libraries\Assimp\include;..\Libraries\glm;..\Libraries\glew-2.1.0\include;..\Libraries\GLFW\include;..\Libraries\glad\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,12 +151,13 @@
     <None Include="..\Model\PabloTower.fbx" />
     <None Include="FragmentShader.glsl" />
     <None Include="Model\Cube.fbx" />
+    <None Include="Model\Red.fbx" />
     <None Include="orb.fbx" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Model\diffuse.png" />
-    <Image Include="FireTexture.png" />
+    <Image Include="Model\Red_diffuse.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

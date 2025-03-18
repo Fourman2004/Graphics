@@ -17,7 +17,7 @@ int main()
 
     shader myshader("VertexShader.glsl", "FragmentShader.glsl");
     glEnable(GL_DEPTH_TEST);
-    Model myModel("Model/Cube.fbx");
+    Model myModel("Model/Red.fbx");
 
     while (!glfwWindowShouldClose(window))
     {
@@ -27,7 +27,7 @@ int main()
       model = mat4(1.0f);
       model = translate(model, vec3(0.0f, 0.0f, 0.0f)); 
       model = scale(model, vec3(1, 1, 1));
-      glClearColor(1,1,1,1);
+      glClearColor(0.5,0.5,0.5,0.5);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       myshader.use();
     

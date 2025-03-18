@@ -64,12 +64,15 @@
     <None Include="Model\Cube.fbx">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Model\Red.fbx">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Model\diffuse.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="FireTexture.png">
+    <Image Include="Model\Red_diffuse.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

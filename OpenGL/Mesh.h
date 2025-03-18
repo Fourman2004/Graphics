@@ -21,7 +21,7 @@ struct Vertex
 
 struct texture
 {
-    unsigned int id = 0;
+    GLuint id;
     string type,path;
 };
 
@@ -33,7 +33,7 @@ public:
     vector<texture> textures;
     GLuint VAO, VBO, EBO;
 
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indicies, vector<texture> textures)
+    Mesh(vector<Vertex> vertices, vector<GLuint> indicies, vector<texture> textures)
     {
         {
             this->vertices = vertices;
@@ -65,7 +65,7 @@ public:
         }
 
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indicies.size()), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<GLuint>(indicies.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         shader.use();
         glActiveTexture(GL_TEXTURE0);

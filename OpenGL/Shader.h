@@ -40,8 +40,8 @@ public:
 		string vCode, fCode;
 		//ifstream is for the file path.
 		ifstream vFile, fFile;
-		vFile.exceptions(ifstream::failbit || ifstream::badbit);
-		fFile.exceptions(ifstream::failbit || ifstream::badbit);
+		vFile.exceptions(ifstream::failbit | ifstream::badbit);
+		fFile.exceptions(ifstream::failbit | ifstream::badbit);
 		//attempts the following in this order:
 		/*
 		Opens the Shader Files
