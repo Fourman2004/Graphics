@@ -5,13 +5,19 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "filesystem.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <map>
 #include "Mesh.h"
 #include "Shader.h"
 
 using namespace Assimp;
 using namespace glm;
+using namespace std;    
 
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
+GLuint TextureFromFile(const char* path, const string& directory, bool gamma);
 
 class Model
 {
@@ -144,7 +150,7 @@ private:
         // normal: texture_normalN
 
         // 1. diffuse maps
-       /* vector<texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        vector<texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         // 2. specular maps
         vector<texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
@@ -183,7 +189,7 @@ private:
             if (!skip)
             {   // if texture hasn't been loaded already, load it
                 texture texture;
-                texture.id = TextureFromFile(str.C_Str(), this->directory);
+                texture.id = TextureFromFile(str.C_Str(), this->directory, false);
                 texture.type = typeName;
                 texture.path = str.C_Str();
                 textures.push_back(texture);
@@ -195,7 +201,7 @@ private:
 };
 
 
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
+GLuint TextureFromFile(const char* path, const string& directory, bool gamma)
 {
 
     string filename = directory + "/" + path;
@@ -224,17 +230,15 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        cout << "Texture loaded at path: " << path << endl;
-        stbi_image_free(data);
+        cout << "Texture loaded at path: " << filename << endl;
     }
     else
     {
-        cout << "Texture failed to load at path: " << path << endl;
-        stbi_image_free(data);
-        
+        cout << "Texture failed to load at path: " << filename << endl;
     }
-
+    stbi_image_free(data);
     return textureID;
 }
+
 
 #endif
