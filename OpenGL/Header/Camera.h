@@ -96,24 +96,6 @@ float lastY = screenH / 2.0f;
 
 		}
 
-		/*void callMouse(GLFWwindow* window, double xpos, double ypos)
-		{
-			float Xposition = static_cast<float>(xpos);
-			float Yposition = static_cast<float>(ypos);
-
-			if (mouse)
-			{
-				lastX = Xposition;
-				lastY = Yposition;
-				mouse = false;
-			}
-			float Xoff, Yoff;
-			Xoff = Xposition - lastX;
-			Yoff = Yposition - lastX;
-			lastX = Xposition;
-			lastY = Yposition;
-			mouseMovement(Xoff,Yoff);
-		}*/
 
 		void updateCamera()
 		{

@@ -13,11 +13,11 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     WindowGen();
-    //stbi_set_flip_vertically_on_load(false);
+    stbi_set_flip_vertically_on_load(false);
 
-    shader myshader("Shaders/VertexShader.glsl", "Shaders/FragmentShader.glsl");
+    shader myshader(FileSystem::getPath("Shaders/VertexShader.glsl").c_str(), FileSystem::getPath("Shaders/FragmentShader.glsl").c_str());
     glEnable(GL_DEPTH_TEST);
-    Model myModel(FileSystem::getPath("Model/Pabloorb.fbx"));
+    Model myModel(FileSystem::getPath("Model/backpack.obj"));
     while (!glfwWindowShouldClose(window))
     {
 
@@ -26,7 +26,7 @@ int main()
       model = mat4(1.0f);
       model = translate(model, vec3(0.0f, 0.0f, 0.0f)); 
       model = scale(model, vec3(1, 1, 1));
-      glClearColor(1,1,1,1);
+      glClearColor(0,0,0,1);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       myshader.use();
     

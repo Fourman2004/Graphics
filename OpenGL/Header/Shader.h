@@ -58,6 +58,8 @@ public:
 			//stringstream contains a pointer to the files and their contents
 			vStream << vFile.rdbuf();
 			fStream << fFile.rdbuf();
+			cout << "Vertex Shader Files Loaded" << VertexShader << endl;
+			cout << "Fragment Files Loaded" << FragmentShader << endl;
 			//closes the shader files
 			vFile.close();
 			fFile.close();
