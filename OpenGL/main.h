@@ -9,8 +9,8 @@
 #include <GLFW/glfw3.h>
 #include "Texture.h"
 #include "Shader.h"
-#include "Camera.h"
 #include "Model.h"
+#include "Camera.h"
 
 using namespace glm;
 
@@ -18,24 +18,7 @@ using namespace glm;
 // A pointer to the window that will be generated
 GLFWwindow* window;
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-void callMouse(GLFWwindow* window, double xpos, double ypos)
-{
-    float Xposition = static_cast<float>(xpos);
-    float Yposition = static_cast<float>(ypos);
-
-    if (mouse)
-    {
-        lastX = Xposition;
-        lastY = Yposition;
-        mouse = false;
-    }
-    float Xoff, Yoff;
-    Xoff = Xposition - lastX;
-    Yoff = Yposition - lastX;
-    lastX = Xposition;
-    lastY = Yposition;
-    camera.mouseMovement(Xoff, Yoff);
-};
+void callMouse(GLFWwindow* window, double xpos, double ypos)};
 
 
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
@@ -52,25 +35,9 @@ float deltaT = currentF - lastF;
 mat4 view;
 
 //Retrives the key presses the user can do.
-void inputProcess(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.updateKeyboard(FORWARD, deltaT);   
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.updateKeyboard(BACKWARD, deltaT);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.updateKeyboard(RIGHT, deltaT);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.updateKeyboard(LEFT, deltaT);
-        
-};
+void inputProcess(GLFWwindow* window);
 
-void scrollMovement(GLFWwindow* window, double xoffset, double yoffset)
-{
-    return camera.mouseScroll(static_cast<float>(yoffset));
-}
+void scrollMovement(GLFWwindow* window, double xoffset, double yoffset);
 
 
 /// <summary>
@@ -79,120 +46,12 @@ void scrollMovement(GLFWwindow* window, double xoffset, double yoffset)
 /// <param name="window"> - The Window That has been created</param>
 /// <param name="width"> - The width of the viewport</param>
 /// <param name="height"> -  The height of the viewport</param>
-void callbackFramebufferSize(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-};
+void callbackFramebufferSize(GLFWwindow* window, int width, int height);
 
 //Generates the window used for the project
-bool WindowGen()
-{
-
-
-    if (!glfwInit())
-        return false;
-
-    window = glfwCreateWindow(screenW, screenH, "3D fire", NULL, NULL);
-
-    if (!window)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
-    glfwSetCursorPosCallback(window, callMouse);
-    glfwSetScrollCallback(window, scrollMovement);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return false;
-    }
-
-    return window;
-};
+bool WindowGen();
 
 /// <summary>
 /// Creates the Shape by drawing verticies in the window. Passes the data through VBO, VAO and EBO buffers.
 /// </summery>
-int shapeGen()
-{
-
-    GLfloat vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
-
-    GLuint indices[] = {
-        0, 1, 2,
-        1, 2, 3,
-    };
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
-
-    return 0;
-};
+int shapeGen();

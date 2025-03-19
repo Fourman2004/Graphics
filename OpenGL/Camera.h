@@ -1,5 +1,8 @@
 #pragma once
-#include "main.h"
+#include <iostream>
+#include "glm.hpp"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <ext/matrix_transform.hpp>
 
 using namespace glm;
@@ -16,7 +19,7 @@ float currentF= static_cast<float>(glfwGetTime());
 bool mouse;
 const float YAW = -90,
 PITCH = 0,ZOOM = 45,SENS = 0.1,SPEED = 2.5;
-unsigned int screenW = 800, screenH = 600;
+GLuint screenW = 800, screenH = 600;
 float lastX = screenW / 2.0f;
 float lastY = screenH / 2.0f;
 
@@ -43,84 +46,15 @@ float lastY = screenH / 2.0f;
 			Pitch = pitch;
 			updateCamera();
 		}
-		mat4 viewMatrix()
-		{
-			return lookAt(Pos, Pos + Front, Up);
-		}
+		mat4 viewMatrix();
 
 
-		void updateKeyboard(Direction direction, float deltaTime)
-		{
-			float velocity = Speed * deltaTime;
-			switch (direction)
-			{
-			case FORWARD:
-				
-				Pos += Front * velocity;
-				break;
-			case BACKWARD:
-				Pos -= Front * velocity;
-				
-				break;
-			case LEFT:
-				Pos -= Right * velocity;
-				break;
-			case RIGHT:
-				Pos -= Right * velocity;	
-				break;
-			}
-		}
-		void mouseScroll(float yoffset)
-		{
-			Zoom -= (float)yoffset;
-			if (Zoom < 1.0f)
-				Zoom = 1.0f;
-			if (Zoom > 45.0f)
-				Zoom = 45.0f;
-		}
+		void updateKeyboard(Direction direction, float deltaTime);
+		void mouseScroll(float yoffset);
 
-		void mouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
-		{
-			xoffset *= Sensitivity;
-			yoffset *= Sensitivity;
-			Yaw = xoffset;
-			Pitch = yoffset;
-			if (constrainPitch)
-			{
-				if (Pitch > 89)
-					Pitch = 89;
-				if (Pitch < -89)
-					Pitch = -89;
-					updateCamera();
-			}
+		void mouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
 
-		}
+		//void callMouse(GLFWwindow* window, double xpos, double ypos);
 
-		/*void callMouse(GLFWwindow* window, double xpos, double ypos)
-		{
-			float Xposition = static_cast<float>(xpos);
-			float Yposition = static_cast<float>(ypos);
-
-			if (mouse)
-			{
-				lastX = Xposition;
-				lastY = Yposition;
-				mouse = false;
-			}
-			float Xoff, Yoff;
-			Xoff = Xposition - lastX;
-			Yoff = Yposition - lastX;
-			lastX = Xposition;
-			lastY = Yposition;
-			mouseMovement(Xoff,Yoff);
-		}*/
-
-		void updateCamera()
-		{
-			vec3 front;
-			front.x = cos(radians(Yaw) * cos(Pitch));
-		    front.y = sin(radians(Pitch));
-			front.z = sin(radians(Yaw) * cos(Pitch));
-			Front = normalize(front);
-		}
+		void updateCamera();
 	};
