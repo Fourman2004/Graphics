@@ -54,6 +54,10 @@ private:
             cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
             return false;
         }
+        if (scene->mNumMeshes == 0) {
+            std::cout << "WARNING::ASSIMP::The scene has no meshes." << std::endl;
+            return false;
+        }
         // retrieve the directory path of the filepath
         directory = path.substr(0, path.find_last_of('/'));
         cout << " mesh loaded at path: " << path << endl;
@@ -71,6 +75,7 @@ private:
             // the node object only contains indices to index the actual objects in the scene. 
             // the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			cout << "mesh name: " << mesh->mName.C_Str() << endl;
             meshes.push_back(processMesh(mesh, scene));
         }
         // after we've processed all of the meshes (if any) we then recursively process each of the children nodes
@@ -115,7 +120,7 @@ private:
                 vec.x = mesh->mTextureCoords[0][i].x;
                 vec.y = mesh->mTextureCoords[0][i].y;
                 vertex.texCoords = vec;
-                // tangent
+               /* // tangent
                 vector.x = mesh->mTangents[i].x;
                 vector.y = mesh->mTangents[i].y;
                 vector.z = mesh->mTangents[i].z;
@@ -124,7 +129,7 @@ private:
                 vector.x = mesh->mBitangents[i].x;
                 vector.y = mesh->mBitangents[i].y;
                 vector.z = mesh->mBitangents[i].z;
-                vertex.bitTangent = vector;
+                vertex.bitTangent = vector;*/
             }
             else
             {

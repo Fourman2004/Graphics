@@ -34,14 +34,15 @@ public:
 	/// <para> - The HLSL/GLSL file that will communicate with this constructor for the vertex shader, and so the verticies in the program. Will contain some input</para>
 	/// </param>
 	/// <param name="FragmentShader"><para> - The HLSL/GLSL file that will communicate to the individual pixels in the program. can obtain inputs from the Vertex shader</para></param>
-	shader(const char* VertexShader, const char* FragmentShader)
+	shader(const char* VertexShader, const char* FragmentShader, const char* geometryPath = nullptr)
 	{
 		//string is for the code inside the files
-		string vCode, fCode;
+		string vCode, fCode, gCode;
 		//ifstream is for the file path.
-		ifstream vFile, fFile;
+		ifstream vFile, fFile, gFile;
 		vFile.exceptions(ifstream::failbit || ifstream::badbit);
 		fFile.exceptions(ifstream::failbit || ifstream::badbit);
+		gFile.exceptions(ifstream::failbit || ifstream::badbit);
 		//attempts the following in this order:
 		/*
 		Opens the Shader Files
@@ -54,7 +55,7 @@ public:
 			vFile.open(VertexShader);
 			fFile.open(FragmentShader);
 			//stringstream read/writes the open file into 
-			stringstream vStream, fStream;
+			stringstream vStream, fStream, gStream;
 			//stringstream contains a pointer to the files and their contents
 			vStream << vFile.rdbuf();
 			fStream << fFile.rdbuf();
@@ -78,7 +79,7 @@ public:
 		//sets the pointers to the shader code
 		vShadCode = vCode.c_str();
 		fShadCode = fCode.c_str();
-		GLuint V, F;
+		GLuint V, F, G;
 		//Creates the vertex shader and applies it to the unsigned integer V.
 		//It will then set or replace the old shader code with new code, and executes it
 		//Finally, it compiles
@@ -95,6 +96,16 @@ public:
 		glCompileShader(F);
 		//checks to see if it compiled properly
 		errorCheck(F, "Fragment");
+
+		if (geometryPath != nullptr)
+		{
+			const char* gShadCode = gCode.c_str();
+			G = glCreateShader(GL_GEOMETRY_SHADER);
+			glShaderSource(G, 1, &gShadCode, NULL);
+			glCompileShader(G);
+			errorCheck(G, "Geometry");
+		}
+		//
 		//Creates the Program and applies it to the unsigned integer ID.
 		//It will Attach V and F to the the 
 		//Finally, it links
@@ -107,6 +118,8 @@ public:
 		//Removes the data for the shaders, freeing up memory
 		glDeleteShader(V);
 		glDeleteShader(F);
+		if (geometryPath!= nullptr)
+			glDeleteShader(G);
 	}
 	//Uses the shaders attached to the ID
 	void use()

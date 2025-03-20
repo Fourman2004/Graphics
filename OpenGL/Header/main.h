@@ -13,59 +13,21 @@
 #include "Model.h"
 
 using namespace glm;
-
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 // A pointer to the window that will be generated
 GLFWwindow* window;
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-void callMouse(GLFWwindow* window, double xpos, double ypos)
-{
-    float Xposition = static_cast<float>(xpos);
-    float Yposition = static_cast<float>(ypos);
-
-    if (mouse)
-    {
-        lastX = Xposition;
-        lastY = Yposition;
-        mouse = false;
-    }
-    float Xoff, Yoff;
-    Xoff = Xposition - lastX;
-    Yoff = Yposition - lastX;
-    lastX = Xposition;
-    lastY = Yposition;
-    camera.mouseMovement(Xoff, Yoff);
-};
+void callMouse(GLFWwindow* window, double xpos, double ypos);
 
 
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 
 //Unsigned integer's for the vertex shader, fragment shader, the program the shader's attached to, along with the buffers for verticies, indicies and the vertex array
 GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
-
-// Matrix for Translation
-mat4 model;
-
-float lastF = currentF;
-float deltaT = currentF - lastF;
-
-mat4 view;
+float deltaTime;
 
 //Retrives the key presses the user can do.
-void inputProcess(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.updateKeyboard(FORWARD, deltaT);   
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.updateKeyboard(BACKWARD, deltaT);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.updateKeyboard(RIGHT, deltaT);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.updateKeyboard(LEFT, deltaT);
-        
-};
+void inputProcess(GLFWwindow* window);
 
 void scrollMovement(GLFWwindow* window, double xoffset, double yoffset)
 {
@@ -85,35 +47,7 @@ void callbackFramebufferSize(GLFWwindow* window, int width, int height)
 };
 
 //Generates the window used for the project
-bool WindowGen()
-{
-
-
-    if (!glfwInit())
-        return false;
-
-    window = glfwCreateWindow(screenW, screenH, "3D fire", NULL, NULL);
-
-    if (!window)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, callbackFramebufferSize);
-    glfwSetCursorPosCallback(window, callMouse);
-    glfwSetScrollCallback(window, scrollMovement);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return false;
-    }
-
-    return window;
-};
+bool WindowGen();
 
 /// <summary>
 /// Creates the Shape by drawing verticies in the window. Passes the data through VBO, VAO and EBO buffers.

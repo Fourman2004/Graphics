@@ -1,6 +1,9 @@
 #pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
+
+#include <gtc/matrix_transform.hpp>
 #include "main.h"
-#include <ext/matrix_transform.hpp>
 
 using namespace glm;
 
@@ -106,3 +109,5 @@ float lastY = screenH / 2.0f;
 			Front = normalize(front);
 		}
 	};
+
+#endif

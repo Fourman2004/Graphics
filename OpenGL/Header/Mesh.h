@@ -45,9 +45,7 @@ public:
     };
     void Draw(shader &shader)
     {
-        GLuint diffuse, specular;
-        diffuse = 0;
-        specular = 0;
+        GLuint diffuse = 1, specular = 1,normal = 1,height = 1;
         for (GLuint i = 0; i < textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i);
@@ -59,6 +57,10 @@ public:
             else if (name == "texture_specular") {
                 number = to_string(specular++);
             }
+            else if (name == "texture_normal")
+                number = std::to_string(normal++); // transfer unsigned int to string
+            else if (name == "texture_height")
+                number = std::to_string(height++); // transfer unsigned int to string
             glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
 
@@ -77,7 +79,7 @@ private:
 /// <summary>
 /// Creates the Mesh by drawing verticies in the window. Passes the data through VBO, VAO and EBO buffers.
 /// </summery>
-	void MeshGen()
+    void MeshGen()
 	{
 
         glGenVertexArrays(1, &VAO);
@@ -118,6 +120,7 @@ private:
         glEnableVertexAttribArray(6);
 
         glBindVertexArray(0);
+
 	}
 };
 
