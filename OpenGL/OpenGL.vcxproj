@@ -136,17 +136,21 @@
   <ItemGroup>
     <ClCompile Include="CPP\OpenGL.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="ufbx.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Camera.h" />
     <ClInclude Include="Header\filesystem.h" />
     <ClInclude Include="Header\main.h" />
-    <ClInclude Include="Header\Mesh.h" />
-    <ClInclude Include="Header\Model.h" />
+    <ClInclude Include="Header\LOGLMesh.h" />
+    <ClInclude Include="Header\LOGLModel.h" />
     <ClInclude Include="Header\root_directory.h" />
     <ClInclude Include="Header\Shader.h" />
     <ClInclude Include="Header\stb_image.h" />
     <ClInclude Include="Header\Texture.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="ufbx.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\FragmentShader.glsl" />

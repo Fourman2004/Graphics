@@ -21,6 +21,9 @@
     <ClCompile Include="CPP\OpenGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ufbx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Camera.h">
@@ -32,10 +35,10 @@
     <ClInclude Include="Header\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Mesh.h">
+    <ClInclude Include="Header\LOGLMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Model.h">
+    <ClInclude Include="Header\LOGLModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header\root_directory.h">
@@ -49,6 +52,15 @@
     </ClInclude>
     <ClInclude Include="Header\Texture.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ufbx.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
