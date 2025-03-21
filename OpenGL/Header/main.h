@@ -10,7 +10,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Camera.h"
-#include "Model.h"
+#include "LOGLModel.h"
 
 using namespace glm;
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
