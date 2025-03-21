@@ -19,7 +19,7 @@ int main()
     shader myshader(FileSystem::getPath("Shaders/VertexShader.glsl").c_str(), FileSystem::getPath("Shaders/FragmentShader.glsl").c_str());
     glEnable(GL_DEPTH_TEST);
     Model myModel(FileSystem::getPath("Model/backpack.obj"));
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window)) 
     {
         float currentFrame = static_cast<float>(glfwGetTime());
         float lastFrame = currentFrame;
@@ -43,10 +43,9 @@ int main()
       model = translate(model, vec3(0.0f, 0.0f, 0.0f));
       model = scale(model, vec3(1, 1, 1));
       myshader.setMat4("model", model);
-
       myModel.Draw(myshader);
+
       glfwSwapBuffers(window);
-      
      glfwPollEvents();
     }
 

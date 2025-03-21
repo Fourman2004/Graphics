@@ -10,7 +10,7 @@
 #include <sstream>
 #include <iostream>
 #include <map>
-#include "Mesh.h"
+#include "LOGLMesh.h"
 #include "Shader.h"
 
 using namespace Assimp;

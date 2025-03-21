@@ -6,6 +6,8 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 #include <GL/gl.h> 
+#include "filesystem.h"
+#include "LOGLModel.h"
 #include <GLFW/glfw3.h>
 #include "Texture.h"
 #include "Shader.h"
