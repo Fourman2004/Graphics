@@ -144,7 +144,6 @@
     <ClInclude Include="Header\main.h" />
     <ClInclude Include="Header\LOGLMesh.h" />
     <ClInclude Include="Header\LOGLModel.h" />
-    <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\root_directory.h" />
     <ClInclude Include="Header\Shader.h" />
     <ClInclude Include="Header\stb_image.h" />

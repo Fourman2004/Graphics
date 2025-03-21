@@ -18,13 +18,14 @@ using namespace Assimp;
 using namespace glm;
 using namespace std;    
 
+
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
 
 class Model
 {
 public:
     // model data 
-    vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+    vector<texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
     vector<Mesh>    meshes;
     string directory;
     bool gammaCorrection;
@@ -36,7 +37,7 @@ public:
     }
 
     // draws the model, and thus all its meshes
-    void Draw(Shader& shader)
+    void Draw(shader& shader)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)
             meshes[i].Draw(shader);
@@ -57,7 +58,7 @@ private:
         }
         // retrieve the directory path of the filepath
         directory = path.substr(0, path.find_last_of('/'));
-
+        cout << " mesh loaded at path: " << path << endl;
         // process ASSIMP's root node recursively
         processNode(scene->mRootNode, scene);
     }
@@ -149,16 +150,16 @@ private:
         // normal: texture_normalN
 
         // 1. diffuse maps
-        vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        vector<texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         // 2. specular maps
-        vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        vector<texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
         // 3. normal maps
-        std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        std::vector<texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
         // 4. height maps
-        std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        std::vector<texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
         // return a mesh object created from the extracted mesh data
@@ -167,9 +168,9 @@ private:
 
     // checks all material textures of a given type and loads the textures if they're not loaded yet.
     // the required info is returned as a Texture struct.
-    vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
+    vector<texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
     {
-        vector<Texture> textures;
+        vector<texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
             aiString str;
@@ -187,18 +188,17 @@ private:
             }
             if (!skip)
             {   // if texture hasn't been loaded already, load it
-                Texture texture;
-                texture.id = TextureFromFile(str.C_Str(), this->directory);
-                texture.type = typeName;
-                texture.path = str.C_Str();
-                textures.push_back(texture);
-                textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
+                texture texture1;
+                texture1.id = TextureFromFile(str.C_Str(), this->directory);
+                texture1.type = typeName;
+                texture1.path = str.C_Str();
+                textures.push_back(texture1);
+                textures_loaded.push_back(texture1);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
             }
         }
         return textures;
     }
 };
-
 
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
@@ -228,7 +228,7 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+		cout << "Texture loaded at path: " << path << endl; 
         stbi_image_free(data);
     }
     else
@@ -239,6 +239,4 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
 
     return textureID;
 }
-
-
 #endif
