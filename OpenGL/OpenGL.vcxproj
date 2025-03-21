@@ -144,12 +144,11 @@
     <ClInclude Include="Header\main.h" />
     <ClInclude Include="Header\LOGLMesh.h" />
     <ClInclude Include="Header\LOGLModel.h" />
+    <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\root_directory.h" />
     <ClInclude Include="Header\Shader.h" />
     <ClInclude Include="Header\stb_image.h" />
     <ClInclude Include="Header\Texture.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="ufbx.h" />
   </ItemGroup>
   <ItemGroup>
