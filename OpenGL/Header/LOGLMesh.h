@@ -2,127 +2,152 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include <vector>
-#include "main.h"
-#include "Shader.h"
-
 
 #define MAX_BONE_INFLUENCE 4
 
-using namespace glm;
+
+#include <glad/glad.h> // holds all OpenGL type declarations
+
+#include "glm.hpp"
+#include <gtc/matrix_transform.hpp>
+
+#include "Shader.h"
+
+#include <string>
+#include <vector>
 using namespace std;
+using namespace glm;
 
-struct Vertex
-{
-    vec3 position, normal, tangent, bitTangent;
-    vec2 texCoords;
-    int m_boneIDs[MAX_BONE_INFLUENCE];
-    float weight[MAX_BONE_INFLUENCE];
+#define MAX_BONE_INFLUENCE 4
+
+struct Vertex {
+    // position
+    glm::vec3 Position;
+    // normal
+    glm::vec3 Normal;
+    // texCoords
+    glm::vec2 TexCoords;
+    // tangent
+    glm::vec3 Tangent;
+    // bitangent
+    glm::vec3 Bitangent;
+    //bone indexes which will influence this vertex
+    int m_BoneIDs[MAX_BONE_INFLUENCE];
+    //weights from each bone
+    float m_Weights[MAX_BONE_INFLUENCE];
 };
 
-struct texture
-{
-    unsigned int id = 0;
-    string type,path;
+struct texture {
+    unsigned int id;
+    string type;
+    string path;
 };
 
-class Mesh
-{
+class Mesh {
 public:
-    vector<Vertex> vertices;
-    vector<GLuint> indicies;
-    vector<texture> textures;
-    GLuint VAO, VBO, EBO;
+    // mesh Data
+    vector<Vertex>       vertices;
+    vector<unsigned int> indices;
+    vector<texture>      textures;
+    unsigned int VAO;
 
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indicies, vector<texture> textures)
+    // constructor
+    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<texture> textures)
     {
-        {
-            this->vertices = vertices;
-            this->indicies = indicies;
-            this->textures = textures;
+        this->vertices = vertices;
+        this->indices = indices;
+        this->textures = textures;
 
-            MeshGen();
-        }
-    };
-    void Draw(shader &shader)
+        // now that we have all the required data, set the vertex buffers and its attribute pointers.
+        setupMesh();
+    }
+
+    // render the mesh
+    void Draw(shader& shader)
     {
-        GLuint diffuse = 1, specular = 1,normal = 1,height = 1;
-        for (GLuint i = 0; i < textures.size(); i++)
+        // bind appropriate textures
+        unsigned int diffuseNr = 1;
+        unsigned int specularNr = 1;
+        unsigned int normalNr = 1;
+        unsigned int heightNr = 1;
+        for (unsigned int i = 0; i < textures.size(); i++)
         {
-            glActiveTexture(GL_TEXTURE0 + i);
+            glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
+            // retrieve texture number (the N in diffuse_textureN)
             string number;
             string name = textures[i].type;
-            if (name == "texture_diffuse") {
-                number = to_string(diffuse++);
-            }
-            else if (name == "texture_specular") {
-                number = to_string(specular++);
-            }
+            if (name == "texture_diffuse")
+                number = std::to_string(diffuseNr++);
+            else if (name == "texture_specular")
+                number = std::to_string(specularNr++); // transfer unsigned int to string
             else if (name == "texture_normal")
-                number = std::to_string(normal++); // transfer unsigned int to string
+                number = std::to_string(normalNr++); // transfer unsigned int to string
             else if (name == "texture_height")
-                number = std::to_string(height++); // transfer unsigned int to string
-            glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
-            glBindTexture(GL_TEXTURE_2D, textures[i].id);
+                number = std::to_string(heightNr++); // transfer unsigned int to string
 
+            // now set the sampler to the correct texture unit
+            glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
+            // and finally bind the texture
+            glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }
 
+        // draw mesh
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indicies.size()), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
-        shader.use();
+
+        // always good practice to set everything back to defaults once configured.
         glActiveTexture(GL_TEXTURE0);
-    };
+    }
+
 private:
+    // render data 
+    unsigned int VBO, EBO;
 
-    //Unsigned integer's for the vertex shader, fragment shader, the program the shader's attached to, along with the buffers for verticies, indicies and the vertex array
-
-/// <summary>
-/// Creates the Mesh by drawing verticies in the window. Passes the data through VBO, VAO and EBO buffers.
-/// </summery>
-    void MeshGen()
-	{
-
+    // initializes all the buffer objects/arrays
+    void setupMesh()
+    {
+        // create buffers/arrays
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
-        glBindVertexArray(VAO);
 
+        glBindVertexArray(VAO);
+        // load data into vertex buffers
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
+        // A great thing about structs is that their memory layout is sequential for all its items.
+        // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
+        // again translates to 3/2 floats which translates to a byte array.
+        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indicies.size(), indicies.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+        // set the vertex attribute pointers
+        // vertex Positions
         glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+        // vertex normals
         glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+        // vertex texture coords
         glEnableVertexAttribArray(2);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+        // vertex tangent
         glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,tangent));
-    
-        
-        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitTangent));
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
+        // vertex bitangent
         glEnableVertexAttribArray(4);
-
-       
-        glVertexAttribIPointer(5, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_boneIDs));
+        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
+        // ids
         glEnableVertexAttribArray(5);
-   
-        
-        glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
+        glVertexAttribIPointer(5, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
+
+        // weights
         glEnableVertexAttribArray(6);
-
+        glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
         glBindVertexArray(0);
-
-	}
+    }
 };
 
 
