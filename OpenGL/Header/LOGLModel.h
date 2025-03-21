@@ -10,6 +10,7 @@
 #include <sstream>
 #include <iostream>
 #include <map>
+#include "stb_image.h"
 #include "LOGLMesh.h"
 #include "Shader.h"
 

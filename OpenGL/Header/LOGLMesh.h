@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "main.h"
+#include "Shader.h"
 
 
 #define MAX_BONE_INFLUENCE 4
