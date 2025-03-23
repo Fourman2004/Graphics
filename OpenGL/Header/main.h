@@ -12,7 +12,6 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Camera.h"
-#include "LOGLModel.h"
 
 using namespace glm;
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -21,6 +20,10 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 GLFWwindow* window;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
+float screenW = 800, screenH = 600;
+float lastX = screenW/ 2.0f;
+float lastY = screenH/ 2.0f;
+bool firstMouse = true;
 
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 

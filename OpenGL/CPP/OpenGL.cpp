@@ -5,6 +5,7 @@
 #include "../Header/main.h"
 
 
+
 int main()
 {
     // glfw: initialize and configure
@@ -20,7 +21,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(screenW, screenH, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(screenW, screenH, "COMP305_3D_FIRE", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -56,7 +57,7 @@ int main()
 
     // load models
     // -----------
-    Model ourModel(FileSystem::getPath("Model/backpack.obj"));
+    Model ourModel(FileSystem::getPath("Model/MyModels/Pablorb.fbx"));
 
 
     // draw in wireframe
@@ -70,6 +71,7 @@ int main()
         // --------------------
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
         // input
         // -----
@@ -85,7 +87,7 @@ int main()
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
-        glm::mat4 view = camera.viewMatrix();
+        glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
@@ -140,6 +142,20 @@ bool WindowGen()
     return window;
 }
 
+void inputProcess(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(RIGHT, deltaTime);
+}
+
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -155,11 +171,11 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
 
-    if (mouse)
+    if (firstMouse)
     {
         lastX = xpos;
         lastY = ypos;
-        mouse = false;
+        firstMouse = false;
     }
 
     float xoffset = xpos - lastX;
@@ -168,29 +184,14 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     lastX = xpos;
     lastY = ypos;
 
-    camera.mouseMovement(xoffset, yoffset);
+    camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    camera.mouseScroll(static_cast<float>(yoffset));
-}
-
-void inputProcess(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.updateKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.updateKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.updateKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.updateKeyboard(LEFT, deltaTime);
-
+    camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 int shapeGen()
