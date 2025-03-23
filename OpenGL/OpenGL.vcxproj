@@ -134,35 +134,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CPP\OpenGL.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="OpenGL.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="ufbx.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Header\Camera.h" />
+    <ClInclude Include="Header\filesystem.h" />
+    <ClInclude Include="Header\main.h" />
+    <ClInclude Include="Header\LOGLMesh.h" />
+    <ClInclude Include="Header\LOGLModel.h" />
+    <ClInclude Include="Header\root_directory.h" />
+    <ClInclude Include="Header\Shader.h" />
+    <ClInclude Include="Header\stb_image.h" />
+    <ClInclude Include="Header\Texture.h" />
+    <ClInclude Include="ufbx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Model\Pabloorb.fbx" />
-    <None Include="..\Model\PabloTower.fbx" />
-    <None Include="FragmentShader.glsl" />
-    <None Include="Model\Cube.fbx" />
-    <None Include="Model\Red.fbx" />
-    <None Include="orb.fbx" />
-    <None Include="VertexShader.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Model\diffuse.png" />
-    <Image Include="Model\Red_diffuse.png" />
+    <None Include="Shaders\FragmentShader.glsl" />
+    <None Include="Shaders\VertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
