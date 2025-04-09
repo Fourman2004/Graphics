@@ -22,7 +22,7 @@ public class MeshFunnygen : MonoBehaviour
 
     private void Update()
     {
-        if (MV.wave) { wave(Time.timeSinceLevelLoad * MV.waveSpeed)};
+        if (MV.wave) { wave(Time.timeSinceLevelLoad * MV.waveSpeed); }
         generateMesh();
     }
 
