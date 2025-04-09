@@ -11,6 +11,8 @@ public class MeshFunnygen : MonoBehaviour
     Vector3[] verts;
     int[] tris;
     Vector2[] UV;
+    Color[] meshColours;
+    float terrainHigh, terrainLow;
 
      public Meshvalues MV;
     // Start is called before the first frame update
@@ -40,6 +42,9 @@ public class MeshFunnygen : MonoBehaviour
                 if (!MV.wave)
                 {
                     float k = Mathf.PerlinNoise(i * MV.perlinNoiseval, j * MV.perlinNoiseval) * MV.height;
+
+                    if (k > terrainHigh) { terrainHigh = k; }
+                    if (k < terrainLow) { terrainLow = k; }
                     verts[index] = new Vector3(j, k, i);
                 }
                 else { verts[index] = new Vector3(j, 0, i);}
@@ -75,6 +80,17 @@ public class MeshFunnygen : MonoBehaviour
                 index++;
             }
         }
+
+        meshColours = new Color[verts.Length];
+        for (int index = 0, i = 0; i <= MV.sizeZ; i++)
+        {
+            for (int j = 0; j <= MV.sizeX; j++)
+            {
+                float meshheight = Mathf.InverseLerp(terrainHigh,terrainLow,verts[index].y);
+                meshColours[index] = MV.meshGradient.Evaluate(meshheight);
+                index++;
+            }
+        }
     }
 
     void generateMesh()
@@ -84,6 +100,7 @@ public class MeshFunnygen : MonoBehaviour
         m_TheMesh.vertices = verts;
         m_TheMesh.triangles = tris;
         m_TheMesh.uv = UV;
+        m_TheMesh.colors = meshColours;
         m_TheMesh.RecalculateNormals();
     }
 

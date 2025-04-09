@@ -12,6 +12,7 @@ public class Meshvalues : MonoBehaviour
     public bool drawGizmo,wave;
     public Slider[] ValueChanger;
     public Text[] Slidertext;
+    public Gradient meshGradient;
 
 
     private void Start()
