@@ -1,49 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.LowLevelPhysics;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshFunnygen : MonoBehaviour
 {
-    [Header("The Mesh")]
     Mesh m_TheMesh;
-
-    [SerializeField,Header("mesh Data")]
     Vector3[] verts;
-    [SerializeField]
     int[] tris;
+    Vector2[] UV;
 
-    public int sizeX, sizeZ;
-    public float radial;
+     public Meshvalues MV;
     // Start is called before the first frame update
     void Start()
     {
         m_TheMesh = new Mesh();
         GetComponent<MeshFilter>().mesh = m_TheMesh;
-       dataForTerrain();
+        dataForTerrain();
+    }
+
+    private void Update()
+    {
+        if (MV.wave) { wave(Time.timeSinceLevelLoad * MV.waveSpeed)};
         generateMesh();
     }
 
     void dataForTerrain()
     {
 
-        verts = new Vector3[(sizeX + 1) * (sizeZ + 1)];
+        verts = new Vector3[(MV.sizeX + 1) * (MV.sizeZ + 1)];
 
        
-        for (int index = 0, i = 0; i <= sizeZ; i++)
+        for (int index = 0, i = 0; i <= MV.sizeZ; i++)
         {
-            for (int j = 0; j <= sizeX; j++)
+            for (int j = 0; j <= MV.sizeX; j++)
             {
-                verts[index] = new Vector3(j, 0, i);
+                float k = Mathf.PerlinNoise(i* MV.perlinNoiseval,j * MV.perlinNoiseval) * MV.height;
+                verts[index] = new Vector3(j, k, i);
                 index++;
             }
         }
 
-        for (int index = 0, i = 0; i <= sizeX; i++)
+        tris = new int[(MV.sizeX *MV.sizeZ)*6];
+        int triangle = 0, vert = 0;
+        for (int i = 0; i < MV.sizeZ; i++)
         {
-            for (int j = 0; j <= sizeX; j++)
+            for (int j = 0; j < MV.sizeX; j++)
             {
-                
+                tris[triangle + 0] = vert + 0;
+                tris[triangle + 1] = vert + MV.sizeX + 1;
+                tris[triangle + 2] = vert + 1;
+                tris[triangle + 3] = vert + 1;
+                tris[triangle + 4] = vert + MV.sizeX + 1;
+                tris[triangle + 5] = vert + MV.sizeX + 2;
+
+                vert++;
+                triangle+=6;
+            }
+            vert++;
+        }
+
+        UV = new Vector2[verts.Length];
+        for (int index = 0, i = 0; i <= MV.sizeZ; i++)
+        {
+            for (int j = 0; j <= MV.sizeX; j++)
+            {
+                UV[index] = new Vector2((float)j/MV.sizeX, (float)i/MV.sizeZ);
                 index++;
             }
         }
@@ -55,16 +78,30 @@ public class MeshFunnygen : MonoBehaviour
 
         m_TheMesh.vertices = verts;
         m_TheMesh.triangles = tris;
+        m_TheMesh.uv = UV;
         m_TheMesh.RecalculateNormals();
     }
 
+
+    void wave(float time)
+    {
+        for(int i = 0; i < verts.Length;i++)
+        {
+            Vector3 vertex = verts[i];
+            vertex.y = Mathf.Sin(time*vertex.x);
+            verts[i] = vertex;
+        }
+    }
     private void OnDrawGizmos()
     {
         if (verts == null){return;}
 
-        for (int i = 0; i < verts.Length; i++)
+        if (MV.drawGizmo)
         {
-            Gizmos.DrawSphere(verts[i],radial);
+            for (int i = 0; i < verts.Length; i++)
+            {
+                Gizmos.DrawSphere(verts[i], MV.radius);
+            }
         }
     }
 }
