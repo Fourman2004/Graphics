@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.LowLevelPhysics;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshFunnygen : MonoBehaviour
@@ -26,7 +27,7 @@ public class MeshFunnygen : MonoBehaviour
         generateMesh();
     }
 
-    void dataForTerrain()
+    public void dataForTerrain()
     {
 
         verts = new Vector3[(MV.sizeX + 1) * (MV.sizeZ + 1)];
