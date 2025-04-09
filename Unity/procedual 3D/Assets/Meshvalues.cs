@@ -51,4 +51,9 @@ public class Meshvalues : MonoBehaviour
         waveSpeed = ValueChanger[2].value;
         Slidertext[2].text = "Wave Speed:" + " " + string.Format("{0:#.00}", waveSpeed);
     }
+
+    public void QuitProduct()
+    {
+        Application.Quit();
+    }
 }
