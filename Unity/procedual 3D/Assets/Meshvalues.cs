@@ -18,11 +18,11 @@ public class Meshvalues : MonoBehaviour
     {
         if (wave) { Slidertext[0].text = "Water Width:" + sizeX;
             Slidertext[1].text = "Water Length:" + sizeZ;
-            Slidertext[2].text = "Wave Speed:" + waveSpeed;
+            Slidertext[2].text = "Wave Speed:" + string.Format("{0:#.00}", waveSpeed);
         }
         else { Slidertext[0].text = "Land Width:" + sizeX; 
             Slidertext[1].text = "Land Length:" + sizeZ;
-            Slidertext[2].text = "Land Height:" + height;
+            Slidertext[2].text = "Land Height:" + string.Format("{0:#.00}", height);
         }
     }
     public void widthchange()
@@ -35,7 +35,8 @@ public class Meshvalues : MonoBehaviour
     public void heightchange()
     {
         height = ValueChanger[2].value;
-        Slidertext[2].text = "Land Height:" + height;
+        perlinNoiseval = (ValueChanger[2].value / 10.0f);
+        Slidertext[2].text = "Land Height:" + string.Format("{0:#.00}", height);
     }
 
     public void lengthchange()
@@ -48,6 +49,6 @@ public class Meshvalues : MonoBehaviour
     public void WSpeedchange()
     {
         waveSpeed = ValueChanger[2].value;
-        Slidertext[2].text = "Wave Speed:" + waveSpeed;
+        Slidertext[2].text = "Wave Speed:" + " " + string.Format("{0:#.00}", waveSpeed);
     }
 }
