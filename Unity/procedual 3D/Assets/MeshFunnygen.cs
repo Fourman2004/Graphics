@@ -22,7 +22,7 @@ public class MeshFunnygen : MonoBehaviour
 
     private void Update()
     {
-        if (MV.wave) { wave(Time.timeSinceLevelLoad * MV.waveSpeed); }
+        if (MV.wave) { wave(Time.timeSinceLevelLoad*MV.waveSpeed); }
         generateMesh();
     }
 
@@ -36,9 +36,13 @@ public class MeshFunnygen : MonoBehaviour
         {
             for (int j = 0; j <= MV.sizeX; j++)
             {
-                float k = Mathf.PerlinNoise(i* MV.perlinNoiseval,j * MV.perlinNoiseval) * MV.height;
-                verts[index] = new Vector3(j, k, i);
-                index++;
+                if (!MV.wave)
+                {
+                    float k = Mathf.PerlinNoise(i * MV.perlinNoiseval, j * MV.perlinNoiseval) * MV.height;
+                    verts[index] = new Vector3(j, k, i);
+                }
+                else { verts[index] = new Vector3(j, 0, i);}
+                    index++;
             }
         }
 
