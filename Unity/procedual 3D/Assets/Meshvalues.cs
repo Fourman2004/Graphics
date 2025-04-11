@@ -14,8 +14,12 @@ public class Meshvalues : MonoBehaviour
     public Text[] Slidertext;
     public Gradient meshGradient;
 
-
     private void Start()
+    {
+        inittextvals();
+    }
+
+    private void inittextvals()
     {
         if (wave) { Slidertext[0].text = "Water Width:" + sizeX;
             Slidertext[1].text = "Water Length:" + sizeZ;
@@ -33,10 +37,15 @@ public class Meshvalues : MonoBehaviour
         else{ Slidertext[0].text = "Land Width:" + sizeX; }
     }
 
+    public void noisechange()
+    {
+        perlinNoiseval = ValueChanger[3].value;
+        Slidertext[3].text = "Land Noise:" + string.Format("{0:#.00}", height);
+    }
+
     public void heightchange()
     {
         height = ValueChanger[2].value;
-        perlinNoiseval = (ValueChanger[2].value / 10.0f);
         Slidertext[2].text = "Land Height:" + string.Format("{0:#.00}", height);
     }
 
@@ -53,6 +62,15 @@ public class Meshvalues : MonoBehaviour
         Slidertext[2].text = "Wave Speed:" + " " + string.Format("{0:#.00}", waveSpeed);
     }
 
+    public void resetValues()
+    {
+        sizeX = 50;
+        sizeZ = 50;
+        perlinNoiseval = 0.1f;
+        height = 10;
+        if (wave) { waveSpeed = 0.01f; }
+        inittextvals();
+    }
     public void QuitProduct()
     {
         Application.Quit();

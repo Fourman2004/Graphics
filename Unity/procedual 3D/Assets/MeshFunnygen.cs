@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class MeshFunnygen : MonoBehaviour
     Vector2[] UV;
     Color[] meshColours;
     float terrainHigh, terrainLow;
+    Vector3 vertex;
 
      public Meshvalues MV;
     // Start is called before the first frame update
@@ -21,12 +23,14 @@ public class MeshFunnygen : MonoBehaviour
         m_TheMesh = new Mesh();
         GetComponent<MeshFilter>().mesh = m_TheMesh;
         dataForTerrain();
+        if (!MV.wave) {generateMesh(); }
     }
 
     private void Update()
     {
-        if (MV.wave) { wave(Time.timeSinceLevelLoad*MV.waveSpeed); }
-        generateMesh();
+        if (MV.wave) { wave(Time.timeSinceLevelLoad*MV.waveSpeed);
+            generateMesh();
+        }
     }
 
     public void dataForTerrain()
@@ -47,7 +51,7 @@ public class MeshFunnygen : MonoBehaviour
                     if (k < terrainLow) { terrainLow = k; }
                     verts[index] = new Vector3(j, k, i);
                 }
-                else { verts[index] = new Vector3(j, 0, i);}
+                else { verts[index] = new Vector3(j, vertex.y, i);}
                     index++;
             }
         }
@@ -93,7 +97,7 @@ public class MeshFunnygen : MonoBehaviour
         }
     }
 
-    void generateMesh()
+   public void generateMesh()
     {
         m_TheMesh.Clear();
 
@@ -109,8 +113,10 @@ public class MeshFunnygen : MonoBehaviour
     {
         for(int i = 0; i < verts.Length;i++)
         {
-            Vector3 vertex = verts[i];
+            vertex = verts[i];
             vertex.y = Mathf.Sin(time*vertex.x);
+            if (vertex.y > terrainHigh) { terrainHigh = vertex.y; }
+            if (vertex.y < terrainLow) { terrainLow = vertex.y; }
             verts[i] = vertex;
         }
     }
