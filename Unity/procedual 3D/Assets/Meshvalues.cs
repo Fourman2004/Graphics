@@ -28,6 +28,7 @@ public class Meshvalues : MonoBehaviour
         else { Slidertext[0].text = "Land Width:" + sizeX; 
             Slidertext[1].text = "Land Length:" + sizeZ;
             Slidertext[2].text = "Land Height:" + string.Format("{0:#.00}", height);
+            Slidertext[3].text = "Land Noise:" + string.Format("{0:#.00}", perlinNoiseval);
         }
     }
     public void widthchange()
@@ -40,7 +41,7 @@ public class Meshvalues : MonoBehaviour
     public void noisechange()
     {
         perlinNoiseval = ValueChanger[3].value;
-        Slidertext[3].text = "Land Noise:" + string.Format("{0:#.00}", height);
+        Slidertext[3].text = "Land Noise:" + string.Format("{0:#.00}", perlinNoiseval);
     }
 
     public void heightchange()
@@ -62,10 +63,10 @@ public class Meshvalues : MonoBehaviour
         Slidertext[2].text = "Wave Speed:" + " " + string.Format("{0:#.00}", waveSpeed);
     }
 
-    public void resetValues()
+    public void resetValues(int size)
     {
-        sizeX = 50;
-        sizeZ = 50;
+        sizeX = size;
+        sizeZ = size;
         perlinNoiseval = 0.1f;
         height = 10;
         if (wave) { waveSpeed = 0.01f; }
