@@ -114,12 +114,15 @@
 
 \section*{Materials and Methods}
 
-
+\subsection{Terrain generation}
 
 %------------------------------------------------
 
-\subsection*{Mathematical Section}
+\subsection*{Optimization tools}
 
+For optimization, what is used is NVIDIA nsight, which is an application for debugging C++ projects. One issue this has is you cannot debug the unity project, due to it using C\#. However, what can be done is debugging the build. In order to accomplish this, the developer must create a empty C++ project, and build the game into that project. They then must select Nsight to run the games .exe file. This will cause the unity build to open with the Nsight debugger enabled.
+
+To optimise the project, it will be done in engine utilising the Profiler tool. 
 
 
 %----------------------------------------------------------------------------------------
@@ -127,6 +130,7 @@
 %----------------------------------------------------------------------------------------
 
 \section*{Results}
+
 
 
 \begin{center}\vspace{1cm}
@@ -163,8 +167,6 @@ s.
 %----------------------------------------------------------------------------------------
 
 \section*{Acknowledgements}
-
-Etiam fermentum, arcu ut gravida fringilla, dolor arcu laoreet justo, ut imperdiet urna arcu a arcu. Donec nec ante a dui tempus consectetur. Cras nisi turpis, dapibus sit amet mattis sed, laoreet.
 
 %----------------------------------------------------------------------------------------
 
