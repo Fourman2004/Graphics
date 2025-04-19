@@ -114,15 +114,34 @@
 
 \section*{Materials and Methods}
 
-\subsection{Terrain generation}
-
+\subsection{Terrain generation: The basics}
+Terrain generation works utilising the same system as Mesh generation, which takes an array of vertex's and indicies, passing them through the VAO, VBO and EBO buffers in conjunction with the Depth buffer. \\
+The method used will be similar to this, though won't rely on directly communicating to OpenGL, which is the more optimal method. For this purpose, Unity has the GL library, which allows unity to communicate with OpenGL and render things using the GPU.
+For this, The program will communicate with the 
+\begin{center}\vspace{1cm}
+\includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 182238}
+\captionof{figure}{An OpenGL render, utilising code from \cite{} }
+\label{figure1}
+\end{center}\vspace{1cm}
 %------------------------------------------------
 
 \subsection*{Optimization tools}
 
 For optimization, what is used is NVIDIA nsight, which is an application for debugging C++ projects. One issue this has is you cannot debug the unity project, due to it using C\#. However, what can be done is debugging the build. In order to accomplish this, the developer must create a empty C++ project, and build the game into that project. They then must select Nsight to run the games .exe file. This will cause the unity build to open with the Nsight debugger enabled.
 
-To optimise the project, it will be done in engine utilising the Profiler tool. 
+To optimise the project, it will be done in engine utilising the Profiler tool. The tool tracks Rendering, CPU usage, Memory/RAM usage, along with FPS. it function is similar to the diagnostic tools built into Visual Studio, where it pauses/breaks the program to get CPU and memory performance
+
+\begin{center}\vspace{1cm}
+\includegraphics[width=0.5\linewidth]{Screenshot 2025-04-19 182523}
+\captionof{figure}{The Diagnostic tools within Visual studio.}
+\label{figure2}
+\end{center}\vspace{1cm}
+\hfill
+\begin{center}\vspace{1cm}
+\includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 183930}
+\captionof{figure}{the profiler within Unity}
+\label{figure3}
+\end{center}\vspace{1cm}
 
 
 %----------------------------------------------------------------------------------------
@@ -131,12 +150,19 @@ To optimise the project, it will be done in engine utilising the Profiler tool.
 
 \section*{Results}
 
-
-
-\begin{center}\vspace{1cm}
-\includegraphics[width=0.8\linewidth]{placeholder}
-\captionof{figure}{ In editor test, without a reset button}
-\end{center}\vspace{1cm}
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 194840}
+\captionof{figure}{NSight result with the FPS noted. With the values maxed out.}
+\label{figure4}
+\end{minipage}
+\hfill
+\begin{minipage}{0.8\textwidth}
+\includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 194902}
+\captionof{figure}{ NSight result with the FPS noted. Using default sizes.}
+\label{figure5}
+\end{minipage}
+\end{center}
 
 %----------------------------------------------------------------------------------------
 %	CONCLUSIONS
@@ -151,8 +177,7 @@ To optimise the project, it will be done in engine utilising the Profiler tool.
 %----------------------------------------------------------------------------------------
 
 \section*{Forthcoming Research}
-
-s.
+In this field, research will be done with culling algorithms in a Generated City using the GL libary for Unity.
 
  %----------------------------------------------------------------------------------------
 %	REFERENCES

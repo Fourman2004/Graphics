@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MeshFunnygen">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="MV" Type="Meshvalues" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="0.958" />
+        <Point X="6.25" Y="0.958" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAKAAACACAYAAAAAEAAAgAAAAgIgAAEAAAAg=</HashCode>
+      <FileName>Assets\MeshFunnygen.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="MV" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Meshvalues">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAIABAGCACAA2YAAYABBAAAEAAAAAAAAiAAAAAQAA=</HashCode>
+      <FileName>Assets\Meshvalues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

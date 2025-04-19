@@ -2,6 +2,7 @@
     "extension": "ngfx-proj",
     "files": [
         {
+            "is_open": true,
             "path": "../../../NVIDIA Nsight Graphics/CppCaptures/procedual_3D__2025_04_16__20_10_50/procedual_3D__2025_04_16__20_10_50.ngfx-cppcap"
         },
         {
