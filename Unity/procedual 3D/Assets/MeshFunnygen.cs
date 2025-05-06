@@ -38,69 +38,72 @@ public class MeshFunnygen : MonoBehaviour
 
         verts = new Vector3[(MV.sizeX + 1) * (MV.sizeZ + 1)];
 
-       
+
         for (int index = 0, i = 0; i <= MV.sizeZ; i++)
         {
             for (int j = 0; j <= MV.sizeX; j++)
             {
-                if (!MV.wave)
-                {
-                    float k = Mathf.PerlinNoise(i * MV.perlinNoiseval, j * MV.perlinNoiseval) * MV.height;
+             vertex.y = noise(i, j, 0) + noise(i, j, 1) + noise(i, j, 2);
 
-                    if (k > terrainHigh) { terrainHigh = k; }
-                    if (k < terrainLow) { terrainLow = k; }
-                    verts[index] = new Vector3(j, k, i);
-                }
-                else { verts[index] = new Vector3(j, vertex.y, i);}
-                    index++;
+             if (vertex.y > terrainHigh) { terrainHigh = vertex.y; }
+             if (vertex.y < terrainLow) { terrainLow = vertex.y; }
+                  
+             verts[index] = new Vector3(j, vertex.y, i);
+             index++;
             }
         }
 
-        tris = new int[(MV.sizeX *MV.sizeZ)*6];
+        tris = new int[MV.sizeX * MV.sizeZ * 6];
         int triangle = 0, vert = 0;
-        for (int i = 0; i < MV.sizeZ; i++)
-        {
-            for (int j = 0; j < MV.sizeX; j++)
+            for (int i = 0; i < MV.sizeZ; i++)
             {
-                tris[triangle + 0] = vert + 0;
-                tris[triangle + 1] = vert + MV.sizeX + 1;
-                tris[triangle + 2] = vert + 1;
-                tris[triangle + 3] = vert + 1;
-                tris[triangle + 4] = vert + MV.sizeX + 1;
-                tris[triangle + 5] = vert + MV.sizeX + 2;
+                for (int j = 0; j < MV.sizeX; j++)
+                {
+                    tris[triangle + 0] = vert + 0;
+                    tris[triangle + 1] = vert + MV.sizeX + 1;
+                    tris[triangle + 2] = vert + 1;
+                    tris[triangle + 3] = vert + 1;
+                    tris[triangle + 4] = vert + MV.sizeX + 1;
+                    tris[triangle + 5] = vert + MV.sizeX + 2;
 
+                    vert++;
+                    triangle += 6;
+                }
                 vert++;
-                triangle+=6;
             }
-            vert++;
-        }
 
         UV = new Vector2[verts.Length];
         for (int index = 0, i = 0; i <= MV.sizeZ; i++)
         {
             for (int j = 0; j <= MV.sizeX; j++)
             {
-                UV[index] = new Vector2((float)j/MV.sizeX, (float)i/MV.sizeZ);
+                UV[index] = new Vector2((float)j / MV.sizeX, (float)i / MV.sizeZ);
                 index++;
             }
         }
 
+        colour();
+    }
+
+    void colour()
+    {
         meshColours = new Color[verts.Length];
         for (int index = 0, i = 0; i <= MV.sizeZ; i++)
         {
             for (int j = 0; j <= MV.sizeX; j++)
             {
-                float meshheight = Mathf.InverseLerp(terrainHigh,terrainLow,verts[index].y);
+                float meshheight = Mathf.InverseLerp(terrainHigh, terrainLow, verts[index].y);
                 meshColours[index] = MV.meshGradient.Evaluate(meshheight);
                 index++;
             }
         }
+
     }
 
    public void generateMesh()
     {
         m_TheMesh.Clear();
-
+        m_TheMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         m_TheMesh.vertices = verts;
         m_TheMesh.triangles = tris;
         m_TheMesh.uv = UV;
@@ -114,11 +117,13 @@ public class MeshFunnygen : MonoBehaviour
         for(int i = 0; i < verts.Length;i++)
         {
             vertex = verts[i];
-            vertex.y = Mathf.Sin(time*vertex.x);
+            float wavepattern = noise(vertex.x, vertex.z, 0) + noise(vertex.x, vertex.z, 1) + noise(vertex.x, vertex.z, 2);
+            vertex.y = Mathf.Sin(time*wavepattern);
             if (vertex.y > terrainHigh) { terrainHigh = vertex.y; }
             if (vertex.y < terrainLow) { terrainLow = vertex.y; }
             verts[i] = vertex;
         }
+        colour();
     }
     private void OnDrawGizmos()
     {
@@ -132,4 +137,12 @@ public class MeshFunnygen : MonoBehaviour
             }
         }
     }
+
+    float noise(float x, float z, int Arrayindex)
+    {
+        float Result = MV.ampvalue[Arrayindex]*Mathf.PerlinNoise(z * MV.perlinNoiseval[Arrayindex], x * MV.perlinNoiseval[Arrayindex]) * MV.height;
+        return Result;
+    }
+
+    
 }

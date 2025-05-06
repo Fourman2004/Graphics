@@ -120,7 +120,7 @@ The method used will be similar to this, though won't rely on directly communica
 For this, The program will communicate with the 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 182238}
-\captionof{figure}{An OpenGL render, utilising code from \cite{} }
+\captionof{figure}{An OpenGL render, utilising code from \cite{}}
 \label{figure1}
 \end{center}\vspace{1cm}
 %------------------------------------------------
@@ -129,7 +129,7 @@ For this, The program will communicate with the
 
 For optimization, what is used is NVIDIA nsight, which is an application for debugging C++ projects. One issue this has is you cannot debug the unity project, due to it using C\#. However, what can be done is debugging the build. In order to accomplish this, the developer must create a empty C++ project, and build the game into that project. They then must select Nsight to run the games .exe file. This will cause the unity build to open with the Nsight debugger enabled.
 
-To optimise the project, it will be done in engine utilising the Profiler tool. The tool tracks Rendering, CPU usage, Memory/RAM usage, along with FPS. it function is similar to the diagnostic tools built into Visual Studio, where it pauses/breaks the program to get CPU and memory performance
+To optimise the project, it will be done in engine utilising the Profiler tool. The tool tracks Rendering, CPU usage, Memory/RAM usage, along with FPS. it function is similar to the diagnostic tools built into Visual Studio, where it pauses/breaks the program to get CPU and memory performance.
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.5\linewidth]{Screenshot 2025-04-19 182523}
@@ -150,16 +150,18 @@ To optimise the project, it will be done in engine utilising the Profiler tool. 
 
 \section*{Results}
 
+The tool, by default, runs at 145FPS using a 4050 laptop GPU and as seen in figure \ref{figure4}, and runs at approximately 55fps with every value set to it's maximum, in figure \ref{figure5}. The build used for the GPU optimisation goes up to 450.
+The tool also renders in very low poly's, and so for a cleaner terrain you would need to subdivide the generated mesh. Without this, it can lead to stretched faces and, if it has collision, impassible or hard to navigate terrain. The solution to this situation was to increment the verticies whenever it obtained the data to generate the mesh.
 \begin{center}
 \begin{minipage}{0.8\textwidth}
 \includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 194840}
-\captionof{figure}{NSight result with the FPS noted. With the values maxed out.}
+\captionof{figure}{NSight result with the FPS noted. Using default values.}
 \label{figure4}
 \end{minipage}
 \hfill
 \begin{minipage}{0.8\textwidth}
 \includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 194902}
-\captionof{figure}{ NSight result with the FPS noted. Using default sizes.}
+\captionof{figure}{NSight result with the FPS noted. Values are at a maximum.}
 \label{figure5}
 \end{minipage}
 \end{center}
@@ -168,16 +170,8 @@ To optimise the project, it will be done in engine utilising the Profiler tool. 
 %	CONCLUSIONS
 %----------------------------------------------------------------------------------------
 
-
 \section*{Conclusions}
-
-
-%----------------------------------------------------------------------------------------
-%	FORTHCOMING RESEARCH
-%----------------------------------------------------------------------------------------
-
-\section*{Forthcoming Research}
-In this field, research will be done with culling algorithms in a Generated City using the GL libary for Unity.
+On this poster, background on mesh generation is given and how it can be applied to terrain, in addition, methods of optimsations on the GPU are researched and used. Further research in this field will be done with culling algorithms in a Generated City using the GL libary for Unity.
 
  %----------------------------------------------------------------------------------------
 %	REFERENCES

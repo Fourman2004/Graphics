@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Drawing;
 
 public class Meshvalues : MonoBehaviour
 {
     // Start is called before the first frame update
 
     public int sizeX, sizeZ;
-    public float radius, height, perlinNoiseval, waveSpeed;
+    public float radius, height, waveSpeed;
+    public float[] perlinNoiseval, ampvalue;
     public bool drawGizmo,wave;
     public Slider[] ValueChanger;
     public Text[] Slidertext;
@@ -21,14 +23,18 @@ public class Meshvalues : MonoBehaviour
 
     private void inittextvals()
     {
-        if (wave) { Slidertext[0].text = "Water Width:" + sizeX;
+
+        ValueChanger[0].value = sizeX;
+        ValueChanger[1].value = sizeZ;
+        if (wave) { Slidertext[0].text = "Water Width:" + sizeX;          
             Slidertext[1].text = "Water Length:" + sizeZ;
             Slidertext[2].text = "Wave Speed:" + string.Format("{0:#.00}", waveSpeed);
+            ValueChanger[2].value = waveSpeed;
         }
         else { Slidertext[0].text = "Land Width:" + sizeX; 
             Slidertext[1].text = "Land Length:" + sizeZ;
             Slidertext[2].text = "Land Height:" + string.Format("{0:#.00}", height);
-            Slidertext[3].text = "Land Noise:" + string.Format("{0:#.00}", perlinNoiseval);
+            ValueChanger[2].value = height;
         }
     }
     public void widthchange()
@@ -40,7 +46,8 @@ public class Meshvalues : MonoBehaviour
 
     public void noisechange()
     {
-        perlinNoiseval = ValueChanger[3].value;
+        for (int i = 0; i != perlinNoiseval.Length; i++)
+        { perlinNoiseval[i] = ValueChanger[3].value; }
         Slidertext[3].text = "Land Noise:" + string.Format("{0:#.00}", perlinNoiseval);
     }
 
@@ -67,8 +74,7 @@ public class Meshvalues : MonoBehaviour
     {
         sizeX = size;
         sizeZ = size;
-        perlinNoiseval = 0.1f;
-        height = 10;
+        height = 0.1f;
         if (wave) { waveSpeed = 0.01f; }
         inittextvals();
     }
