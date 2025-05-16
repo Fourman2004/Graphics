@@ -80,8 +80,7 @@
 
 
 \begin{abstract}
-
-
+On this poster, we take a look at OpenGl, how to generate a model utilising it, and how to apply this knowledge to a Unity project to create and optimise a scalable size mesh and water/wave system. We also take a look  at external optimisation tools with useage of NVIDIA Nsight. Overall, the project runs at 144fps when running the least or default indicies and vertcies, to the lowest of 55 FPS when running the maximum amount.
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
@@ -91,7 +90,7 @@
 
 
 \section*{Introduction}
-Procedual Terrain Generation (PTG) has existed within the games industry since the turn of the 21st millium, and the creation of the graphics card and, subsequently, Graphics programming, has opened up unlimited possibilities for career pathways such as Engine Development, avenues of technical art, and similar Avenues utilising graphics programming - The most common languages for graphics programming being OpenGL and Vulkan, both come with benifits and drawbacks. This Poster will take a look at OpenGL, understanding it's basics and a look into 
+Procedual Terrain Generation (PTG) has existed within the games industry since the turn of the 21st Century, and the creation of the graphics card and, subsequently, Graphics programming, has opened up unlimited possibilities for career pathways such as Engine Development, avenues of technical art, and similar Avenues utilising graphics programming - The most common languages for graphics programming being OpenGL and Vulkan, both come with benifits and drawbacks. This Poster will take a look at OpenGL, understanding it's basics and a look into how you can use a method to generate terrain in Unity, an Engine that is capable of using OpenGL to run it's in-engine visuals.
 
 
 %----------------------------------------------------------------------------------------
@@ -103,7 +102,8 @@ Procedual Terrain Generation (PTG) has existed within the games industry since t
 \section*{Main Objectives}
 
 \begin{enumerate}
-\item Explore and research how to generate a mesh using graphics.
+\item Cover the basics and logic behind OpenGL Model and Mesh generation.
+\item Explore and research how to generate a mesh using graphics programming.
 \item Create a tool for visualising terrain through a mesh.
 \item Optimise the tool for lower end machines.
 \end{enumerate}
@@ -115,14 +115,17 @@ Procedual Terrain Generation (PTG) has existed within the games industry since t
 \section*{Materials and Methods}
 
 \subsection{Terrain generation: The basics}
-Terrain generation works utilising the same system as Mesh generation, which takes an array of vertex's and indicies, passing them through the VAO, VBO and EBO buffers in conjunction with the Depth buffer. \\
-The method used will be similar to this, though won't rely on directly communicating to OpenGL, which is the more optimal method. For this purpose, Unity has the GL library, which allows unity to communicate with OpenGL and render things using the GPU.
-For this, The program will communicate with the 
+Terrain generation works, in short, by utilising the same system as Mesh generation, which takes an array of vertex's and indicies, passing them through the VAO, VBO and EBO buffers in conjunction with the Depth buffer and rendering them on the screen, along with any textures for the mesh. If you want to load an entire model, you will need to go through each mesh in the object file (FBX, OBJ or STL are common file formats for this), rendering them and applying textures Accordingly thanks to its UV. This is the basis on which almost every 3D game relies on. Figure\ref{figure1} is a backpack that is using a techunique involving ASSIMP (asset importer), GLFW and glad plugins/add-ons, doing what was explained here.\\
+
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 182238}
 \captionof{figure}{An OpenGL render, utilising code from \cite{}}
 \label{figure1}
 \end{center}\vspace{1cm}
+
+For Terrain generation, The program will calculate each vertex and/or indicies, and draw each triangle between three of them, and repeat it flipped, where it would then make a full square. It will then loop through this for it's length and width. It will also calculate the height of each of the indicies, and place them accordingly, using a shader graph to aid in a texture gradient that is applied to the mesh. Without any textures, this is what is displayed in figure 2, which is a prototype of this generation. The basis for this is using a method from this content creator \cite{}.
+
+It will also detect if it should act more like sea/ocean water, where it will begin moving and displacing the triangles using a similar method it uses to how it finds the land.
 %------------------------------------------------
 
 \subsection*{Optimization tools}
