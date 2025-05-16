@@ -1,1 +1,5 @@
 https://blog.siggraph.org/2025/04/evolution-of-gpus.html/
+https://learnopengl.com/
+https://youtube.com/playlist?list=PLNfnoxGFwMBv0gdAmP6JhydVtd30DKilU&si=kGrNDGqYOffGIAtk
+https://natureofcode.com/
+https://developer.nvidia.com/nsight-graphics
