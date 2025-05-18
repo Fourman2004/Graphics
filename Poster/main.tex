@@ -90,7 +90,7 @@ On this poster, we take a look at OpenGl, how to generate a model utilising it, 
 
 
 \section*{Introduction}
-Procedual Terrain Generation (PTG) has existed within the games industry since the turn of the 21st Century, and the creation of the graphics card and, subsequently, Graphics programming, has opened up unlimited possibilities for career pathways such as Engine Development, avenues of technical art, and similar Avenues utilising graphics programming - The most common languages for graphics programming being OpenGL and Vulkan, both come with benifits and drawbacks. This Poster will take a look at OpenGL, understanding it's basics and a look into how you can use a method to generate terrain in Unity, an Engine that is capable of using OpenGL to run it's in-engine visuals.
+Procedual Terrain Generation (PTG) has existed within the games industry since the turn of the 21st Century\cite{GPUEvo}, and the creation of the graphics card and, subsequently, Graphics programming, has opened up unlimited possibilities for career pathways such as Engine Development, avenues of technical art, and similar Avenues utilising graphics programming - The most common languages for graphics programming being OpenGL and Vulkan, both come with benifits and drawbacks. This Poster will take a look at OpenGL, understanding it's basics and a look into how you can use a method to generate terrain in Unity, an Engine that is capable of using OpenGL to run it's in-engine visuals.
 
 
 %----------------------------------------------------------------------------------------
@@ -119,32 +119,26 @@ Terrain generation works, in short, by utilising the same system as Mesh generat
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 182238}
-\captionof{figure}{An OpenGL render, utilising code from \cite{}}
+\captionof{figure}{An OpenGL render, utilising code from \cite{LearnOpenGL}}
 \label{figure1}
 \end{center}\vspace{1cm}
 
-For Terrain generation, The program will calculate each vertex and/or indicies, and draw each triangle between three of them, and repeat it flipped, where it would then make a full square. It will then loop through this for it's length and width. It will also calculate the height of each of the indicies, and place them accordingly, using a shader graph to aid in a texture gradient that is applied to the mesh. Without any textures, this is what is displayed in figure 2, which is a prototype of this generation. The basis for this is using a method from this content creator \cite{}.
+For Terrain generation, The program will calculate each vertex and/or indicies, and draw each triangle between three of them, and repeat it flipped, where it would then make a full square. It will then loop through this for it's length and width. It will also calculate the height of each of the indicies, and place them accordingly, using a shader graph to aid in a texture gradient that is applied to the mesh. Without any textures, this is what is displayed in figure 2, which is a prototype of this generation. The basis for this is using a method from these content creators, which have been compiled into a playlist \footnote{https://youtube.com/playlist?list=PLNfnoxGFwMBv0gdAmP6JhydVtd30DKilU\&si=KShD\_Idr4KxJmqDR}.
 
 It will also detect if it should act more like sea/ocean water, where it will begin moving and displacing the triangles using a similar method it uses to how it finds the land.
 %------------------------------------------------
 
 \subsection*{Optimization tools}
 
-For optimization, what is used is NVIDIA nsight, which is an application for debugging C++ projects. One issue this has is you cannot debug the unity project, due to it using C\#. However, what can be done is debugging the build. In order to accomplish this, the developer must create a empty C++ project, and build the game into that project. They then must select Nsight to run the games .exe file. This will cause the unity build to open with the Nsight debugger enabled.
+For optimization, what is used is NVIDIA nsight\cite{Nsight}, which is an application for debugging C++ projects. One issue this has is you cannot debug the unity project, due to it using C\#. However, what can be done is debugging the build. In order to accomplish this, the developer must create a empty C++ project, and build the game into that project. They then must select Nsight to run the games .exe file. This will cause the unity build to open with the Nsight debugger enabled.
 
-To optimise the project, it will be done in engine utilising the Profiler tool. The tool tracks Rendering, CPU usage, Memory/RAM usage, along with FPS. it function is similar to the diagnostic tools built into Visual Studio, where it pauses/breaks the program to get CPU and memory performance.
+To optimise the project, it will be done in engine utilising the Profiler tool. The tool tracks Rendering, CPU usage, Memory/RAM usage, along with FPS. it function is similar to the diagnostic tools built into Visual Studio, where it pauses/breaks the program to get CPU and memory performance. For most OpenGL projects, you will beusing the one seen in figure \ref{figure2}.
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.5\linewidth]{Screenshot 2025-04-19 182523}
-\captionof{figure}{The Diagnostic tools within Visual studio.}
+\captionof{figure}{The Diagnostic tools within Visual studio. This is similar to the one Unity uses}
 \label{figure2}
-\end{center}\vspace{1cm}
-\hfill
-\begin{center}\vspace{1cm}
-\includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 183930}
-\captionof{figure}{the profiler within Unity}
-\label{figure3}
-\end{center}\vspace{1cm}
+\end{center}
 
 
 %----------------------------------------------------------------------------------------
@@ -153,20 +147,12 @@ To optimise the project, it will be done in engine utilising the Profiler tool. 
 
 \section*{Results}
 
-The tool, by default, runs at 145FPS using a 4050 laptop GPU and as seen in figure \ref{figure4}, and runs at approximately 55fps with every value set to it's maximum, in figure \ref{figure5}. The build used for the GPU optimisation goes up to 450.
+The tool, by default, runs at 145FPS using a 4050 laptop GPU and as seen in figure \ref{figure4}. The build used for the GPU optimisation goes up to 450 and reached a low of 55FPS.
 The tool also renders in very low poly's, and so for a cleaner terrain you would need to subdivide the generated mesh. Without this, it can lead to stretched faces and, if it has collision, impassible or hard to navigate terrain. The solution to this situation was to increment the verticies whenever it obtained the data to generate the mesh.
 \begin{center}
-\begin{minipage}{0.8\textwidth}
 \includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 194840}
 \captionof{figure}{NSight result with the FPS noted. Using default values.}
 \label{figure4}
-\end{minipage}
-\hfill
-\begin{minipage}{0.8\textwidth}
-\includegraphics[width=0.8\linewidth]{Screenshot 2025-04-19 194902}
-\captionof{figure}{NSight result with the FPS noted. Values are at a maximum.}
-\label{figure5}
-\end{minipage}
 \end{center}
 
 %----------------------------------------------------------------------------------------
@@ -174,7 +160,7 @@ The tool also renders in very low poly's, and so for a cleaner terrain you would
 %----------------------------------------------------------------------------------------
 
 \section*{Conclusions}
-On this poster, background on mesh generation is given and how it can be applied to terrain, in addition, methods of optimsations on the GPU are researched and used. Further research in this field will be done with culling algorithms in a Generated City using the GL libary for Unity.
+On this poster, background on mesh generation is given and how it can be applied to terrain, in addition, a method of optimsation on the GPU are researched and used. Further research in this field will be done with culling algorithms in a Generated City using the GL libary for Unity.
 
  %----------------------------------------------------------------------------------------
 %	REFERENCES
