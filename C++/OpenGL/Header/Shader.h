@@ -51,7 +51,7 @@ public:
 		*/
 		try
 		{
-			//open the sahder files
+			//open the shader files
 			vFile.open(VertexShader);
 			fFile.open(FragmentShader);
 			//stringstream read/writes the open file into 

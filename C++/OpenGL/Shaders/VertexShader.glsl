@@ -11,6 +11,8 @@ uniform mat4 projection;
 
 void main()
 {
+//Gets the mesh data for the textures
     TexCoords = aTexCoords;
+//Calculates the position of the textures
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 }

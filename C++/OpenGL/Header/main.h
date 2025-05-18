@@ -13,7 +13,7 @@
 #include "Texture.h"
 #include "Shader.h"
 
-
+//Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 using namespace glm;
@@ -22,20 +22,30 @@ using namespace glm;
 GLFWwindow* window;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
+//screen width and height
 float screenW = 800, screenH = 600;
+//
 float lastX = screenW/ 2.0f;
 float lastY = screenH/ 2.0f;
+//the first instance of the cursor and when it will draw
 bool firstMouse = true, Draw = false;
 
 typedef void (*GL_GENBUFFERS) (GLsizei, GLuint*);
 
 //Unsigned integer's for the vertex shader, fragment shader, the program the shader's attached to, along with the buffers for verticies, indicies and the vertex array
 GLuint vertexShader, fragmentShader, shaderProgram, VAO, VBO, EBO;
+//used for Time
 float deltaTime, lastFrame;
 
 //Retrives the key presses the user can do.
 void inputProcess(GLFWwindow* window);
 
+/// <summary>
+/// Retrives the scroll button
+/// </summary>
+/// <param name="window"> The Open GLFW Window</param>
+/// <param name="xoffset"> the X-axis</param>
+/// <param name="yoffset"> same as Xoffset but for the Y-axis</param>
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 

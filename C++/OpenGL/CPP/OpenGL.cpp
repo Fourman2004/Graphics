@@ -7,6 +7,7 @@
 
 int main()
 {
+    //initalizes the GLFW window
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -18,43 +19,45 @@ int main()
 
     WindowGen();
 
-
+    //flips all the textures, which will be rendered incorrectly if not enabled.
     stbi_set_flip_vertically_on_load(true);
 
-
+    //allows 3D objects/meshes to be rendered, and will allow movement of the camera.
     glEnable(GL_DEPTH_TEST);
 
-  
+  //Set shaders based on file director in root_directory.h
     shader myShader(FileSystem::getPath("Shaders/VertexShader.glsl").c_str(), FileSystem::getPath("Shaders/FragmentShader.glsl").c_str());
 
-
+ //Sets model
     Model myModel(FileSystem::getPath("Model/backpack.obj"));
 
 
-
+    //will draw the mesh/shape as it's polygons, transparent.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
  
     while (!glfwWindowShouldClose(window))
     {
-       
+       //gets the deltatime of the application
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-       
+       //allows interaction with the GLFW window, by getting the key input.
         inputProcess(window);
 
-       
+       //Gets background colour
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-       
+       //uses the shaders
         myShader.use();
 
-   
+        //Gets the Projection of the camera
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)screenW / (float)screenH, 0.1f, 100.0f);
+        //gets the cameras View Matrix
         glm::mat4 view = camera.GetViewMatrix();
+        //Sets Matrix Values of shaders
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
 
@@ -106,8 +109,10 @@ bool WindowGen()
 }
 void inputProcess(GLFWwindow* window)
 {
+    //closes the window, thus executing the code.
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    //W/A/S/D controls based on deltatime
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -116,8 +121,14 @@ void inputProcess(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    //Draws the Model
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         Draw = true;
+    //Enables/Disables Wireframe
+    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_RELEASE)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -153,7 +164,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int shapeGen()
 {
-
+    //How someone would generate a 3D model using an array. This will do colour, position, location, scale. Everything it would need to generate, in this instance, a Cube.
     GLfloat vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -198,10 +209,13 @@ int shapeGen()
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
+    //Ditto with indicies
     GLuint indices[] = {
         0, 1, 2,
         1, 2, 3,
     };
+
+    //See LOGLMesh.h for Buffer documentation
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
